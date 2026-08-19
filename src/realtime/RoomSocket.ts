@@ -10,6 +10,7 @@ import {
   type RoomConfig,
   type ServerFrame,
   type ServerStateFrame,
+  type SignalPayload,
   type TrackingLostReason,
   type WelcomeFrame,
 } from './frames';
@@ -54,6 +55,8 @@ export interface RoomSocketEvents {
   latency: LatencyInfo;
   sessionEnded: { reason: string };
   error: { code: string; message: string; fatal: boolean };
+  /** 다른 참가자가 보낸 WebRTC 시그널 (offer/answer/ICE) */
+  signal: { from: string; data: SignalPayload };
   /** join 을 다시 호출해 자리를 새로 받아야 합니다. */
   needsRejoin: { closeCode: number; message: string };
 }
@@ -70,6 +73,7 @@ export interface RoomSocketOptions {
 }
 
 const DEFAULT_CONFIG: RoomConfig = {
+  signalRelay: false,
   heartbeatMs: 2000,
   recommendedSendHz: 30,
   maxStateHz: 60,
@@ -379,6 +383,11 @@ export class RoomSocket {
         this.emit('sessionEnded', { reason: frame.reason });
         return;
 
+      case 'signal':
+        // 내용은 PeerMesh 가 해석합니다. 소켓은 배달만 합니다.
+        this.emit('signal', { from: frame.from, data: frame.data });
+        return;
+
       case 'error':
         this.emit('error', { code: frame.code, message: frame.message, fatal: frame.fatal });
         return;
@@ -489,6 +498,11 @@ export class RoomSocket {
 
   sendPresence(mic: boolean, vid: boolean) {
     this.send({ t: 'presence', mic, vid });
+  }
+
+  /** 참가자 한 명에게만 가는 WebRTC 시그널. 소켓이 닫혀 있으면 조용히 버립니다. */
+  sendSignal(to: string, data: SignalPayload) {
+    this.send({ t: 'signal', to, data });
   }
 
   sendTracking(status: 'ok' | 'lost', reason?: TrackingLostReason) {

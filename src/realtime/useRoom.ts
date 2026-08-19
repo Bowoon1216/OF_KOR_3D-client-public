@@ -3,7 +3,7 @@ import { toMessage } from '../api/errors';
 import { joinRoom } from '../api/rooms';
 import type { AssetSummary, Participant, Role, RoomTelemetry, Transform } from '../api/types';
 import { getToken } from '../auth/tokenStore';
-import type { GesturePayload, TrackingLostReason, WelcomeFrame } from './frames';
+import type { GesturePayload, SignalPayload, TrackingLostReason, WelcomeFrame } from './frames';
 import { RoomSocket, type ClockInfo, type ConnectionStatus, type LatencyInfo } from './RoomSocket';
 
 /** 새로고침해도 원래 자리로 돌아가기 위해 sessionStorage 에 보관합니다. */
@@ -78,6 +78,12 @@ export interface RoomConnection {
   setTracking: (status: 'ok' | 'lost', reason?: TrackingLostReason) => void;
   releaseControl: () => void;
   leave: () => void;
+  /** 서버가 `signal` 중계를 지원하는지. false 면 참가자 영상을 시도하지 않습니다. */
+  signalRelay: boolean;
+  /** WebRTC 시그널을 특정 참가자에게 보냅니다. */
+  sendSignal: (to: string, data: SignalPayload) => void;
+  /** 들어오는 시그널 구독. 재접속으로 소켓이 새로 만들어져도 구독은 유지됩니다. */
+  onSignal: (handler: (message: { from: string; data: SignalPayload }) => void) => () => void;
 }
 
 /**
@@ -88,6 +94,11 @@ export interface RoomConnection {
  */
 export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): RoomConnection {
   const socketRef = useRef<RoomSocket | null>(null);
+  /**
+   * 시그널 구독자. 소켓은 재접속 때마다 새로 만들어지므로 구독을 소켓에 직접 걸지 않고
+   * 여기 모아 두고, 새 소켓이 만들어질 때 이 집합으로 한 번만 연결합니다.
+   */
+  const signalHandlersRef = useRef(new Set<(message: { from: string; data: SignalPayload }) => void>());
 
   const [status, setStatus] = useState<ConnectionStatus>('idle');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -105,6 +116,7 @@ export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): R
     holderName: null,
   });
   const [endedReason, setEndedReason] = useState<string | null>(null);
+  const [signalRelay, setSignalRelay] = useState(false);
 
   useEffect(() => {
     if (!enabled || !code) return;
@@ -137,6 +149,7 @@ export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): R
         });
         socket.on('welcome', (frame) => {
           setMe(frame.you);
+          setSignalRelay(Boolean(frame.config?.signalRelay));
           setSession(frame.session);
           setAsset(frame.asset);
           setError(null);
@@ -167,6 +180,9 @@ export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): R
         socket.on('error', (payload) => {
           // fatal 이 아니면 연결이 유지되므로 배너만 띄우고 지나갑니다.
           setError(payload.message);
+        });
+        socket.on('signal', (message) => {
+          for (const handler of signalHandlersRef.current) handler(message);
         });
         socket.on('needsRejoin', () => {
           // 예약이 풀렸거나 참가자가 사라진 경우. 자리를 새로 받아 다시 붙습니다.
@@ -214,6 +230,20 @@ export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): R
     socketRef.current?.sendTracking(next, reason);
   }, []);
 
+  const sendSignal = useCallback((to: string, data: SignalPayload) => {
+    socketRef.current?.sendSignal(to, data);
+  }, []);
+
+  const onSignal = useCallback(
+    (handler: (message: { from: string; data: SignalPayload }) => void) => {
+      signalHandlersRef.current.add(handler);
+      return () => {
+        signalHandlersRef.current.delete(handler);
+      };
+    },
+    [],
+  );
+
   const releaseControl = useCallback(() => {
     socketRef.current?.releaseControl();
   }, []);
@@ -249,5 +279,8 @@ export function useRoom({ code, name, role, enabled = true }: UseRoomOptions): R
     setTracking,
     releaseControl,
     leave,
+    signalRelay,
+    sendSignal,
+    onSignal,
   };
 }

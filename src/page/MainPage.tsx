@@ -11,6 +11,9 @@ import ControlPanel from '../components/ControlPanel';
 import Sidebar from '../components/Sidebar';
 import TextField from '../components/TextField';
 import Viewer from '../components/Viewer';
+import { isPeerVideoForced } from '../config/env';
+import { LocalCameraProvider, useLocalCamera } from '../media/LocalCamera';
+import { PeerVideoProvider } from '../media/PeerVideo';
 import { useRoom } from '../realtime/useRoom';
 
 /** 게스트가 이름을 넣기 전에는 join 을 호출하지 않습니다. */
@@ -72,6 +75,30 @@ function GuestGate({
       </section>
     </main>
   );
+}
+
+/**
+ * 웹캠 on/off 를 서버 presence 로 옮깁니다. 카메라를 켜는 입구가 두 곳(뷰어의 Vision Input,
+ * 참가자 타일의 Video)이라 각 버튼이 아니라 스트림 상태 하나만 보고 보냅니다.
+ */
+function CameraPresenceSync({
+  mic,
+  vid,
+  onPresenceChange,
+}: {
+  mic: boolean;
+  vid: boolean;
+  onPresenceChange: (mic: boolean, vid: boolean) => void;
+}) {
+  const { stream } = useLocalCamera();
+  const cameraOn = Boolean(stream);
+
+  useEffect(() => {
+    if (cameraOn === vid) return;
+    onPresenceChange(mic, cameraOn);
+  }, [cameraOn, vid, mic, onPresenceChange]);
+
+  return null;
 }
 
 /** 세션 룸 화면 (/room/:code) */
@@ -165,6 +192,10 @@ export default function MainPage() {
     );
   }
 
+  const myEntry = room.roster.find((p) => p.id === room.me?.id) ?? null;
+  // 실제로 소켓에 붙어 있는 사람만 연결 대상입니다. 자리만 예약한 참가자에게 offer 를 내면 버려집니다.
+  const peerIds = room.roster.filter((p) => p.id !== room.me?.id && p.active).map((p) => p.id);
+
   const holderName =
     room.control.holder && room.control.holder !== room.me?.id
       ? room.control.holderName ??
@@ -189,26 +220,43 @@ export default function MainPage() {
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar
-          roster={room.roster}
-          myId={room.me?.id}
-          status={room.status}
-          onPresenceChange={setPresence}
-        />
-        <Viewer
-          gestureEnabled={gestureEnabled}
-          asset={room.asset}
-          remoteState={room.remoteState}
-          onTransform={sendTransform}
-          roomCode={code}
-          participantId={room.me?.id}
-          joinedAtMs={joinedAtRef.current}
-          // 도면 교체는 방 소유자(호스트)만 가능합니다. 아니면 서버가 403 을 냅니다.
-          canChangeAsset={Boolean(room.me?.isHost) && isAuthenticated}
-          onRequestAssetChange={() => setAssetPickerOpen(true)}
-          controlHolderName={holderName}
-          onTrackingChange={handleTracking}
-        />
+        {/* 참가자 타일과 손 인식이 같은 웹캠 스트림을 나눠 쓰도록 둘을 같은 provider 안에 둡니다. */}
+        <LocalCameraProvider>
+          <PeerVideoProvider
+            // 서버가 signal 중계를 지원한다고 알려줄 때만 켭니다. 모르는 frame 을 보내면 끊길 수 있습니다.
+            enabled={room.signalRelay || isPeerVideoForced()}
+            myId={room.me?.id}
+            peerIds={peerIds}
+            sendSignal={room.sendSignal}
+            onSignal={room.onSignal}
+          >
+            <CameraPresenceSync
+              mic={myEntry?.mic ?? false}
+              vid={myEntry?.vid ?? false}
+              onPresenceChange={setPresence}
+            />
+            <Sidebar
+              roster={room.roster}
+              myId={room.me?.id}
+              status={room.status}
+              onPresenceChange={setPresence}
+            />
+            <Viewer
+              gestureEnabled={gestureEnabled}
+              asset={room.asset}
+              remoteState={room.remoteState}
+              onTransform={sendTransform}
+              roomCode={code}
+              participantId={room.me?.id}
+              joinedAtMs={joinedAtRef.current}
+              // 도면 교체는 방 소유자(호스트)만 가능합니다. 아니면 서버가 403 을 냅니다.
+              canChangeAsset={Boolean(room.me?.isHost) && isAuthenticated}
+              onRequestAssetChange={() => setAssetPickerOpen(true)}
+              controlHolderName={holderName}
+              onTrackingChange={handleTracking}
+            />
+          </PeerVideoProvider>
+        </LocalCameraProvider>
         <ControlPanel
           gestureEnabled={gestureEnabled}
           onGestureEnabledChange={setGestureEnabled}

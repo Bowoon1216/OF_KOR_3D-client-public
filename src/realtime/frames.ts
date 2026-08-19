@@ -90,6 +90,23 @@ export interface ClientLeaveFrame {
   t: 'leave';
 }
 
+/**
+ * WebRTC 시그널링 payload. 서버는 내용을 들여다보지 않고 상대에게 그대로 전달합니다.
+ * (SDP·ICE 규격은 브라우저가 정하므로 서버가 검증할 것이 없습니다.)
+ */
+export type SignalPayload =
+  | { kind: 'offer'; sdp: string }
+  | { kind: 'answer'; sdp: string }
+  | { kind: 'ice'; candidate: RTCIceCandidateInit }
+  | { kind: 'bye' };
+
+/** 참가자 한 명에게만 보내는 1:1 메시지. `to` 는 같은 방의 참가자 id 여야 합니다. */
+export interface ClientSignalFrame {
+  t: 'signal';
+  to: string;
+  data: SignalPayload;
+}
+
 export type ClientFrame =
   | ClientStateFrame
   | ClientPingFrame
@@ -99,11 +116,17 @@ export type ClientFrame =
   | ClientStateRequestFrame
   | ClientControlReleaseFrame
   | ClientTelemetryReportFrame
+  | ClientSignalFrame
   | ClientLeaveFrame;
 
 /* ── Server → Client ──────────────────────────────────────────── */
 
 export interface RoomConfig {
+  /**
+   * 서버가 `signal` frame 중계를 지원하는지. 내려오지 않으면 미지원으로 봅니다.
+   * 지원하지 않는 서버에 `signal` 을 보내면 잘못된 frame 으로 취급돼 1008 로 끊길 수 있습니다.
+   */
+  signalRelay?: boolean;
   heartbeatMs: number;
   recommendedSendHz: number;
   maxStateHz: number;
@@ -246,6 +269,13 @@ export interface SessionEndedFrame {
   reason: string;
 }
 
+/** 서버가 `to` 참가자에게 중계해 준 시그널. `from` 은 보낸 참가자 id 입니다. */
+export interface ServerSignalFrame {
+  t: 'signal';
+  from: string;
+  data: SignalPayload;
+}
+
 export interface ServerErrorFrame {
   t: 'error';
   code: string;
@@ -269,6 +299,7 @@ export type ServerFrame =
   | AssetChangedFrame
   | TelemetryFrame
   | SessionEndedFrame
+  | ServerSignalFrame
   | ServerErrorFrame;
 
 /** 명세 6.2 의 종료 코드 */

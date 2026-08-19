@@ -11,6 +11,15 @@ const DEFAULT_API_BASE_URL = 'http://localhost:8000';
 
 const API_OVERRIDE_KEY = 'of_kor_3d.apiBaseUrl';
 const WS_OVERRIDE_KEY = 'of_kor_3d.wsBaseUrl';
+const ICE_OVERRIDE_KEY = 'of_kor_3d.iceServers';
+
+/**
+ * 참가자 카메라(WebRTC)용 ICE 서버.
+ *
+ * 같은 LAN·KOREN 폐쇄망에서는 host candidate 만으로 붙으므로 비워도 됩니다. 공용망을 섞어
+ * 데모할 때만 STUN 이 필요하고, 대칭 NAT 이 끼면 TURN 을 넣어야 합니다.
+ */
+const DEFAULT_ICE_SERVERS: RTCIceServer[] = [{ urls: 'stun:stun.l.google.com:19302' }];
 
 /** 끝의 `/` 를 떼어 `${base}${path}` 조합이 항상 슬래시 하나가 되게 합니다. */
 function normalizeBase(value: string): string {
@@ -23,6 +32,15 @@ function readOverride(key: string): string | null {
     return raw ? normalizeBase(raw) : null;
   } catch {
     // Safari 프라이빗 모드 등에서 localStorage 접근이 막히면 환경변수만 씁니다.
+    return null;
+  }
+}
+
+/** normalizeBase 를 거치지 않는 원문 리더. JSON 같은 값에 씁니다. */
+function readRaw(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
     return null;
   }
 }
@@ -51,6 +69,33 @@ export function getApiBaseUrl(): string {
  */
 export function getWsBaseUrl(): string | null {
   return readOverride(WS_OVERRIDE_KEY) ?? envValue('VITE_WS_BASE_URL');
+}
+
+/**
+ * 서버가 아직 `config.signalRelay` 를 안 내려주는 동안 참가자 영상을 시험해 보기 위한 스위치입니다.
+ * (콘솔에서 `localStorage.setItem('of_kor_3d.forcePeerVideo', '1')`)
+ */
+export function isPeerVideoForced(): boolean {
+  return readRaw('of_kor_3d.forcePeerVideo') === '1';
+}
+
+/**
+ * `VITE_ICE_SERVERS` / localStorage 오버라이드는 RTCIceServer 배열 JSON 입니다.
+ * 예: `[{"urls":"turn:10.0.0.5:3478","username":"kor","credential":"3d"}]`
+ * `[]` 를 주면 STUN 없이 host candidate 만 씁니다.
+ */
+export function getIceServers(): RTCIceServer[] {
+  const raw =
+    readRaw(ICE_OVERRIDE_KEY) ??
+    (import.meta.env as Record<string, string | undefined> | undefined)?.VITE_ICE_SERVERS;
+  if (!raw?.trim()) return DEFAULT_ICE_SERVERS;
+  try {
+    const parsed = JSON.parse(raw) as RTCIceServer[];
+    return Array.isArray(parsed) ? parsed : DEFAULT_ICE_SERVERS;
+  } catch {
+    // 형식이 틀렸다고 회의를 막지는 않습니다. 기본값으로 붙여 봅니다.
+    return DEFAULT_ICE_SERVERS;
+  }
 }
 
 export function setApiBaseUrl(value: string | null) {
