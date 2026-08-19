@@ -1,0 +1,9 @@
+down   276.12 Mbps
+up      71.39 Mbps
+ping    56.82 ms
+ISP Lg Powercomm
+
+raw       339.23 MB → 업로드 예상    0.6분
+meshopt    36.64 MB → 업로드 예상    0.1분
+draco      13.60 MB → 업로드 예상    0.0분
+합계 예상 0.7분

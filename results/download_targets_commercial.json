@@ -1,0 +1,66 @@
+{
+  "asset": "site_stacked",
+  "label": "commercial",
+  "target_url": "https://AWS_HOST_REDACTED",
+  "published_at": "2026-08-13T00:05:54.038427+09:00",
+  "note": "9월 KOREN 측정에서도 이 파일을 그대로 쓴다 (§4-2). 재생성 금지.",
+  "variants": {
+    "raw": {
+      "asset_id": "a_56077c0a",
+      "entry_filename": "site_stacked_raw.glb",
+      "url": "/static/assets/a_56077c0a/site_stacked_raw.glb",
+      "size_bytes": 339231180,
+      "server_size_bytes": 339231180,
+      "sha256": "81157c4c507b1905de3dfaab33e7b6336414fd73b45f0710f7876193c85ce5be",
+      "local_sha256": "81157c4c507b1905de3dfaab33e7b6336414fd73b45f0710f7876193c85ce5be",
+      "sha256_match": true,
+      "probe": {
+        "status": 200,
+        "content_length": "339231180",
+        "content_type": "model/gltf-binary",
+        "cache_control": "no-store, no-cache, must-revalidate",
+        "accept_ranges": "bytes",
+        "timing_allow_origin": "*",
+        "server": "nginx/1.24.0 (Ubuntu)"
+      }
+    },
+    "meshopt": {
+      "asset_id": "a_ddfbb893",
+      "entry_filename": "site_stacked_meshopt.glb",
+      "url": "/static/assets/a_ddfbb893/site_stacked_meshopt.glb",
+      "size_bytes": 36637416,
+      "server_size_bytes": 36637416,
+      "sha256": "b24152cb4c1b57718bac062f9e0f4af8822a526ae4f49fef371dd576d0b0cd04",
+      "local_sha256": "b24152cb4c1b57718bac062f9e0f4af8822a526ae4f49fef371dd576d0b0cd04",
+      "sha256_match": true,
+      "probe": {
+        "status": 200,
+        "content_length": "36637416",
+        "content_type": "model/gltf-binary",
+        "cache_control": "no-store, no-cache, must-revalidate",
+        "accept_ranges": "bytes",
+        "timing_allow_origin": "*",
+        "server": "nginx/1.24.0 (Ubuntu)"
+      }
+    },
+    "draco": {
+      "asset_id": "a_0db8b84f",
+      "entry_filename": "site_stacked_draco.glb",
+      "url": "/static/assets/a_0db8b84f/site_stacked_draco.glb",
+      "size_bytes": 13595320,
+      "server_size_bytes": 13595320,
+      "sha256": "bad876fa1f8c7e3ac2ba5924cf64936e8fd33e7a69535689b763ebdd42b717ad",
+      "local_sha256": "bad876fa1f8c7e3ac2ba5924cf64936e8fd33e7a69535689b763ebdd42b717ad",
+      "sha256_match": true,
+      "probe": {
+        "status": 200,
+        "content_length": "13595320",
+        "content_type": "model/gltf-binary",
+        "cache_control": "no-store, no-cache, must-revalidate",
+        "accept_ranges": "bytes",
+        "timing_allow_origin": "*",
+        "server": "nginx/1.24.0 (Ubuntu)"
+      }
+    }
+  }
+}

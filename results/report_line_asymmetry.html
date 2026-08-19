@@ -1,0 +1,678 @@
+<title>회선 비대칭 4.91:1</title>
+<style>
+  /* ── 팔레트 ────────────────────────────────────────────────────────────
+     계측기 출력(플로터 용지)에서 가져온 차가운 종이 + 잉크.
+     두 방향(다운/업)은 이 보고서의 주제이므로 각각 고유색을 갖는다:
+     다운로드는 계기 청록, 업로드는 황동. 나머지는 전부 중성으로 눌러 둔다.  */
+  :root {
+    --paper:      #F6F7F9;
+    --surface:    #FFFFFF;
+    --surface-2:  #EEF1F4;
+    --rule:       #D6DBE1;
+    --rule-soft:  #E4E8ED;
+    --ink:        #141821;
+    --ink-2:      #3D4654;
+    --neutral:    #6B7583;   /* 청록 쪽으로 살짝 기울인 회색 */
+    --down:       #16607F;
+    --down-soft:  #CFE0E8;
+    --up:         #8A5A18;
+    --up-soft:    #EADFC9;
+    --flag:       #7A4A55;   /* 한계·주의 */
+    --shadow:     0 1px 2px rgba(20, 24, 33, .06), 0 8px 24px -16px rgba(20, 24, 33, .18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:     #101319;
+      --surface:   #171B23;
+      --surface-2: #1E232C;
+      --rule:      #2C333E;
+      --rule-soft: #232933;
+      --ink:       #E8EBEF;
+      --ink-2:     #B4BCC7;
+      --neutral:   #8B95A3;
+      --down:      #6FB6D4;
+      --down-soft: #1D3D4C;
+      --up:        #D3A25A;
+      --up-soft:   #40331C;
+      --flag:      #C79AA4;
+      --shadow:    0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:     #101319;
+    --surface:   #171B23;
+    --surface-2: #1E232C;
+    --rule:      #2C333E;
+    --rule-soft: #232933;
+    --ink:       #E8EBEF;
+    --ink-2:     #B4BCC7;
+    --neutral:   #8B95A3;
+    --down:      #6FB6D4;
+    --down-soft: #1D3D4C;
+    --up:        #D3A25A;
+    --up-soft:   #40331C;
+    --flag:      #C79AA4;
+    --shadow:    0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .7);
+  }
+
+  /* 한글 본문이므로 서체는 한 계열로 가고, 역할은 굵기·크기·자간으로 나눈다.
+     숫자는 전부 등폭 + tabular-nums 로 세로 정렬을 맞춘다 — 이 문서의 성격이
+     계측 기록이라 자릿수가 어긋나면 읽기가 무너진다. */
+  --han: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+         "Malgun Gothic", "Noto Sans KR", sans-serif;
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+                 "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(1.1rem, 4vw, 2.5rem) 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* ── 표제 ─────────────────────────────────────────────────────────── */
+  header { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--neutral);
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 5.2vw, 3rem);
+    line-height: 1.16;
+    letter-spacing: -.022em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 1.075rem;
+    color: var(--ink-2);
+  }
+
+  /* 세션 조건 — 사양표처럼 */
+  .spec {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .spec div {
+    padding: .8rem 1rem;
+    border-right: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .spec dt {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--neutral);
+    margin: 0 0 .15rem;
+  }
+  .spec dd { margin: 0; font-size: .92rem; line-height: 1.5; }
+
+  /* ── 절 ───────────────────────────────────────────────────────────── */
+  section { display: flex; flex-direction: column; gap: 1.15rem; }
+  h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    letter-spacing: -.014em;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: .7rem;
+    padding-bottom: .6rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  h2 .num {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--neutral);
+    letter-spacing: .08em;
+  }
+  h3 {
+    margin: .9rem 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -.008em;
+  }
+  p { margin: 0; max-width: 44rem; }
+  p + p { margin-top: .3rem; }
+  strong { font-weight: 700; }
+  code {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--surface-2);
+    padding: .1em .34em;
+    border-radius: 2px;
+  }
+
+  /* ── 히어로: 비대칭을 실제 비율로 그린다 ─────────────────────────── */
+  .asym {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.5rem clamp(1rem, 3vw, 1.75rem);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+  .bar-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: center; }
+  .bar-label {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-align: right;
+    color: var(--neutral);
+  }
+  .bar-track { position: relative; height: 2.6rem; background: var(--surface-2); border-radius: 2px; }
+  .bar-fill {
+    position: absolute; inset: 0 auto 0 0;
+    width: var(--w);
+    border-radius: 2px;
+    display: flex; align-items: center;
+    padding-left: .7rem;
+  }
+  .bar-fill.down { background: var(--down); }
+  .bar-fill.up   { background: var(--up); }
+  .bar-val {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .bar-out {
+    position: absolute; left: calc(var(--w) + .7rem); top: 50%;
+    transform: translateY(-50%);
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem;
+    color: var(--neutral);
+    white-space: nowrap;
+  }
+  .asym-foot {
+    display: flex; flex-wrap: wrap; gap: .5rem 2rem;
+    padding-top: .9rem; border-top: 1px solid var(--rule-soft);
+    font-size: .875rem; color: var(--ink-2);
+  }
+  .ratio { font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; }
+
+  /* ── 표 ───────────────────────────────────────────────────────────── */
+  .tw { overflow-x: auto; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+  caption {
+    caption-side: top; text-align: left;
+    padding: .7rem 1rem;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--neutral);
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--surface-2);
+  }
+  th, td { padding: .5rem .85rem; text-align: left; border-bottom: 1px solid var(--rule-soft); }
+  thead th {
+    font-size: .72rem; letter-spacing: .04em; color: var(--neutral);
+    font-weight: 600; white-space: nowrap;
+    border-bottom: 1px solid var(--rule);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  .n {
+    text-align: right;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .hi { font-weight: 700; }
+  .dn { color: var(--down); font-weight: 700; }
+  .upc { color: var(--up); font-weight: 700; }
+  tbody tr.accent { background: var(--surface-2); }
+  .note { font-size: .82rem; color: var(--neutral); max-width: 44rem; }
+
+  /* ── 구간 분해 (스택 바) ──────────────────────────────────────────── */
+  .stack { display: flex; height: 2.1rem; border-radius: 2px; overflow: hidden; border: 1px solid var(--rule); }
+  .stack span { display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 600; white-space: nowrap; overflow: hidden; }
+  .seg-recv { background: var(--down); color: #fff; }
+  .seg-work { background: var(--up); color: #fff; }
+  .seg-rest { background: var(--surface-2); color: var(--neutral); }
+  .legend { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-size: .8rem; color: var(--ink-2); }
+  .legend b { display: inline-flex; align-items: center; gap: .4rem; font-weight: 400; }
+  .sw { width: .7rem; height: .7rem; border-radius: 1px; display: inline-block; }
+
+  /* ── 한계: 숨기지 않고 눈에 띄게 ─────────────────────────────────── */
+  .limits { display: flex; flex-direction: column; gap: 1rem; }
+  .limit {
+    border-left: 3px solid var(--flag);
+    padding: .1rem 0 .1rem 1rem;
+    display: flex; flex-direction: column; gap: .25rem;
+  }
+  .limit b { font-size: .95rem; }
+  .limit p { font-size: .9rem; color: var(--ink-2); }
+
+  /* ── 체크리스트 ──────────────────────────────────────────────────── */
+  ol.checks { margin: 0; padding-left: 1.35rem; display: flex; flex-direction: column; gap: .55rem; }
+  ol.checks li { padding-left: .25rem; }
+  ol.checks li::marker {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .82rem; color: var(--neutral);
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    font-size: .82rem;
+    color: var(--neutral);
+    display: flex; flex-direction: column; gap: .5rem;
+  }
+  a { color: var(--down); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--down); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">상용망 전송 측정 · 2026-08-13</div>
+    <h1>업로드가 다운로드보다 4.9배 느리다</h1>
+    <p class="lede">
+      3D 에셋의 실제 전송 시간을 660회 측정한 결과다. 두 방향 모두 회선 용량에 도달했고
+      서버 상한은 회선의 4~5배로 실측됐으므로, 이 값은 서버나 파일 특성이 아니라
+      <strong>회선 자체의 성능</strong>이다.
+    </p>
+
+    <dl class="spec">
+      <div><dt>측정 시각</dt><dd>2026-08-13 00:06–00:42 KST<br>loopback 2026-08-14 21:56</dd></div>
+      <div><dt>위치 · 회선</dt><dd>가정 · LG U+ FTTH, Wi-Fi</dd></div>
+      <div><dt>서버</dt><dd>EC2 t3.medium · ap-northeast-2</dd></div>
+      <div><dt>표본</dt><dd class="mono">660 (오염 0 · 실패 0)</dd></div>
+    </dl>
+  </header>
+
+  <!-- 1 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">01</span>비대칭</h2>
+
+    <div class="asym">
+      <div class="bar-row">
+        <div class="bar-label">다운로드</div>
+        <div class="bar-track">
+          <div class="bar-fill down" style="--w: 86.8%"><span class="bar-val">341.38 Mbps</span></div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">업로드</div>
+        <div class="bar-track">
+          <div class="bar-fill up" style="--w: 17.7%"><span class="bar-val">69.60</span></div>
+          <span class="bar-out">Mbps</span>
+        </div>
+      </div>
+      <div class="asym-foot">
+        <span><span class="ratio mono">4.91 : 1</span> 단일 스트림 기준</span>
+        <span><span class="ratio mono">5.65 : 1</span> 동시 다운로드 합계(393.26 Mbps) 기준</span>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table>
+        <caption>방향별 대표값</caption>
+        <thead>
+          <tr><th>방향</th><th>최고 처리량</th><th>대표 조건</th><th>1MB 전송</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dn">다운로드</td>
+            <td class="n hi">341.38 Mbps</td>
+            <td>339.23MB 단일 스트림</td>
+            <td class="n">23.6 ms</td>
+          </tr>
+          <tr>
+            <td class="upc">업로드</td>
+            <td class="n hi">69.60 Mbps</td>
+            <td>32.90MB IFC</td>
+            <td class="n">114.7 ms</td>
+          </tr>
+          <tr class="accent">
+            <td>비율</td>
+            <td class="n hi">4.91 : 1</td>
+            <td>—</td>
+            <td class="n hi">4.86 : 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>서비스 관점</h3>
+    <p>
+      건축가가 32.9MB IFC 를 올리는 데 <strong>3.77초</strong>, 그 결과물(36.6MB GLB)을 다른
+      참가자가 받는 데 <strong>0.96초</strong> 다. 체감 지연은 업로드 쪽에서 발생하며,
+      참가자 수를 늘려도 업로드 시간은 줄지 않는다.
+    </p>
+  </section>
+
+  <!-- 2 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">02</span>측정 방법</h2>
+    <dl class="spec">
+      <div><dt>대상</dt><dd>실제 백엔드. 측정 전용 서버 아님</dd></div>
+      <div><dt>다운로드 파일</dt><dd>hoist 20단 적층 씬 3변형<br><span class="mono">339.23 / 36.64 / 13.60 MB</span></dd></div>
+      <div><dt>업로드 파일</dt><dd>BIM 원본 IFC 3종<br><span class="mono">32.90 / 19.90 / 4.93 MB</span></dd></div>
+      <div><dt>반복</dt><dd>워밍업 1라운드 폐기 후 R회</dd></div>
+      <div><dt>캐시</dt><dd>매 요청 <code>?t={ns}</code> · 서버 <code>no-store</code></dd></div>
+      <div><dt>오염 제거</dt><dd>라운드 전후 ENA 스로틀 카운터 대조</dd></div>
+    </dl>
+    <p class="note">
+      업로드는 <code>?convert=false</code> 로 IFC→GLB 변환을 제외해 전송 시간만 측정했다.
+      변환을 포함하면 응답 시간의 대부분이 전송이 아니라 변환이 된다. 집계에 쓴 수치는
+      CLI 하네스 결과이며, 브라우저 하네스는 정합성 확인용 보조 데이터다.
+    </p>
+  </section>
+
+  <!-- 3 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">03</span>다운로드</h2>
+    <div class="tw">
+      <table>
+        <caption>변형 × 동시성</caption>
+        <thead>
+          <tr>
+            <th>변형</th><th>크기</th><th>C</th><th>n</th>
+            <th>p50 (ms)</th><th>p95 (ms)</th><th>처리량 (Mbps)</th><th>합계 (Mbps)</th><th>CV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>raw</td><td class="n">339.23</td><td class="n">1</td><td class="n">10</td>
+              <td class="n">8,011.6</td><td class="n">—</td><td class="n hi">341.38</td><td class="n">341.38</td><td class="n">0.033</td></tr>
+          <tr><td>meshopt</td><td class="n">36.64</td><td class="n">1</td><td class="n">30</td>
+              <td class="n">963.2</td><td class="n">1,226.9</td><td class="n">304.63</td><td class="n">304.63</td><td class="n">0.106</td></tr>
+          <tr><td>meshopt</td><td class="n">36.64</td><td class="n">3</td><td class="n">60</td>
+              <td class="n">2,522.7</td><td class="n">3,319.4</td><td class="n">115.12</td><td class="n hi">345.35</td><td class="n">0.240</td></tr>
+          <tr><td>meshopt</td><td class="n">36.64</td><td class="n">10</td><td class="n">200</td>
+              <td class="n">7,445.1</td><td class="n">8,996.3</td><td class="n">39.33</td><td class="n hi">393.26</td><td class="n">0.413</td></tr>
+          <tr><td>draco</td><td class="n">13.60</td><td class="n">1</td><td class="n">30</td>
+              <td class="n">414.2</td><td class="n">619.6</td><td class="n">263.05</td><td class="n">263.05</td><td class="n">0.155</td></tr>
+          <tr><td>draco</td><td class="n">13.60</td><td class="n">10</td><td class="n">200</td>
+              <td class="n">2,920.5</td><td class="n">3,585.1</td><td class="n">37.15</td><td class="n">371.53</td><td class="n">0.415</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      <code>C</code> = 동시 스트림 수. <code>CV = stddev / mean</code> (처리량 변동성) —
+      <strong>지터가 아니다.</strong> 지터는 RTT 연속 샘플 간 변화량으로 동기화 측정에서 쓰는
+      별개 지표다. <code>n &lt; 30</code> 조건은 p95 를 산출하지 않았다.
+    </p>
+
+    <h3>회선 용량에 도달했다는 근거</h3>
+    <p>
+      동시성을 1 → 3 → 10 으로 <strong>10배</strong> 올려도 합계 처리량이
+      341 → 345 → 393 Mbps 에서 멈춘다. 스트림당 처리량이 동시성에 거의 정확히 반비례한다
+      (304.63 → 115.12 → 39.33). 고정된 용량을 나눠 쓰는 형태이며, 서버가 여유가 없어서 나는
+      현상이 아니다.
+    </p>
+    <p>
+      단일 스트림 341.38 Mbps 는 같은 세션의 speedtest 실측(227.12 Mbps)의
+      <strong>150%</strong> 다. speedtest 가 회선을 과소평가했고, 실제 용량은 340~390 Mbps
+      대에 있다.
+    </p>
+
+    <h3>서버 상한은 회선의 4~5배 — loopback 직접 측정</h3>
+    <p>
+      위 논거는 간접 근거다. 서버가 자기 자신을 부르게 해(loopback) 네트워크를 뺀 상한을
+      직접 쟀다. 같은 공개 호스트명·같은 TLS·같은 nginx 블록을 타되 주소만 127.0.0.1 로
+      꺾었고, ENA 스로틀 카운터가 움직이지 않아 트래픽이 ENI 를 거치지 않았음을 확인했다.
+    </p>
+    <div class="tw">
+      <table>
+        <caption>loopback 상한 대비 상용망 · C=1 · 2026-08-14 · n=70</caption>
+        <thead>
+          <tr><th>변형</th><th>loopback p50</th><th>loopback 처리량</th><th>상용망 처리량</th><th>배수</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>raw (339.23MB)</td><td class="n">1,600.3 ms</td><td class="n hi">1,696.31 Mbps</td><td class="n">341.38</td><td class="n hi">4.97×</td></tr>
+          <tr><td>meshopt (36.64MB)</td><td class="n">214.8 ms</td><td class="n hi">1,377.81 Mbps</td><td class="n">304.63</td><td class="n hi">4.52×</td></tr>
+          <tr><td>draco (13.60MB)</td><td class="n">108.7 ms</td><td class="n hi">1,016.38 Mbps</td><td class="n">263.05</td><td class="n hi">3.86×</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      서버 상한은 <strong>1.02~1.70 Gbps</strong> 로 집 회선의 4~6배다. 세 변형 모두 계획서가
+      정한 보고 기준(3배)을 넘으므로, <strong>“서버가 병목이 아니다” 는 간접 근거가 직접
+      증거로 확인됐다.</strong> 작은 파일일수록 배수가 낮아지는 것(4.97 → 3.86)은 고정 비용
+      비중이 커지기 때문이다.
+    </p>
+    <p class="note">
+      이 값은 “상한” 이 아니라 <strong>“상한의 하한 근사”</strong> 다. 2 vCPU 에서 부하
+      생성기와 서버가 CPU 를 나눠 쓰므로(그래서 loopback 은 C=1 로만 잰다) 실제 상한은 더
+      높다. 정적 파일을 내는 것은 nginx 가 아니라 FastAPI <code>StaticFiles</code> 이므로
+      “nginx 상한” 이라고 부르지 않는다 — uvicorn + ASGI 미들웨어 + 프록시의 합이다.
+    </p>
+  </section>
+
+  <!-- 4 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">04</span>업로드</h2>
+    <div class="tw">
+      <table>
+        <caption>IFC 원본 · C=1 · R=20</caption>
+        <thead>
+          <tr><th>파일</th><th>크기</th><th>n</th><th>p50 (ms)</th><th>처리량 (Mbps)</th><th>CV</th><th>1MB당</th><th>서버 작업</th><th>비중</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>hoist</td><td class="n">32.90</td><td class="n">20</td><td class="n">3,773.7</td>
+              <td class="n hi">69.60</td><td class="n">0.054</td><td class="n">114.7 ms</td><td class="n">114.4 ms</td><td class="n">3.0%</td></tr>
+          <tr><td>boomlift</td><td class="n">19.90</td><td class="n">20</td><td class="n">2,371.5</td>
+              <td class="n">65.99</td><td class="n">0.110</td><td class="n">119.1 ms</td><td class="n">70.7 ms</td><td class="n">3.0%</td></tr>
+          <tr><td>rooflight</td><td class="n">4.93</td><td class="n">20</td><td class="n">643.2</td>
+              <td class="n">58.84</td><td class="n">0.139</td><td class="n">130.5 ms</td><td class="n">22.1 ms</td><td class="n">3.4%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      업로드 최고 69.60 Mbps 는 speedtest 상향 실측(71.12 Mbps)의 <strong>98%</strong> 다.
+      다운로드와 마찬가지로 회선 한계에 도달했다.
+    </p>
+
+    <h3>서버 처리 시간은 3% 다</h3>
+    <div class="stack" role="img"
+         aria-label="hoist 업로드 3773.7ms 의 구간 분해: recv 3602.7ms 95.5퍼센트, store+db 114.4ms 3.0퍼센트, 나머지 1.5퍼센트">
+      <span class="seg-recv" style="width: 95.5%">recv 95.5%</span>
+      <span class="seg-work" style="width: 3.0%"></span>
+      <span class="seg-rest" style="width: 1.5%"></span>
+    </div>
+    <div class="legend">
+      <b><i class="sw" style="background: var(--down)"></i> <code>recv</code> 본문 수신 · 3,602.7 ms — <strong>네트워크 시간</strong></b>
+      <b><i class="sw" style="background: var(--up)"></i> <code>store + db</code> 서버 작업 · 114.4 ms</b>
+      <b><i class="sw" style="background: var(--surface-2); border: 1px solid var(--rule)"></i> 나머지 · 56.6 ms</b>
+    </div>
+    <p>
+      <code>recv</code> 는 서버 처리 시간이 <strong>아니다.</strong> nginx 가
+      <code>proxy_request_buffering off</code> 로 본문을 흘려보내므로 서버의 multipart 파싱이
+      클라이언트 바이트 도착 속도에 묶인다. 따라서 서버가 실제로 일한 시간은
+      <code>store + db</code> 뿐이고, 네트워크 시간은
+      <span class="mono">3,773.7 − 114.4 = 3,659.3 ms</span> 다.
+    </p>
+    <p>
+      <code>recv</code> 를 추가로 빼면 네트워크 시간이 <span class="mono">56.6 ms</span> —
+      실제의 <strong>1.5%</strong> — 로 나와 회선 성능을 65배 좋게 잡는다.
+      <strong>9월 KOREN 비교에서 이 이중 차감을 하면 개선폭을 과소평가한다.</strong>
+    </p>
+  </section>
+
+  <!-- 5 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">05</span>전송 외 고정 비용</h2>
+    <p>
+      파일이 작아지면 처리량이 떨어진다 (raw 341 → meshopt 305 → draco 263 Mbps).
+      크기에 정비례한다면 나오지 않아야 하는 차이다.
+    </p>
+    <div class="tw">
+      <table>
+        <caption>크기 비례 예상 대비 실측</caption>
+        <thead><tr><th>변형</th><th>예상 p50</th><th>실측 p50</th><th>초과</th></tr></thead>
+        <tbody>
+          <tr><td>meshopt (36.64MB)</td><td class="n">865.3 ms</td><td class="n">963.2 ms</td><td class="n hi">+97.9 ms</td></tr>
+          <tr><td>draco (13.60MB)</td><td class="n">321.1 ms</td><td class="n">414.2 ms</td><td class="n hi">+93.1 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      초과분이 파일 크기와 무관하게 93~98 ms 로 일정하다 — 요청당 고정 비용이다.
+    </p>
+    <div class="tw">
+      <table>
+        <caption>고정 비용의 내역</caption>
+        <thead><tr><th>성분</th><th>값</th><th>근거</th></tr></thead>
+        <tbody>
+          <tr><td>DNS + TCP + TLS 핸드셰이크</td><td class="n hi">25.0 ms</td><td>CLI <code>time_pretransfer</code> 중앙값</td></tr>
+          <tr><td>서버 응답 시작</td><td class="n hi">8.1 ms</td><td>브라우저 Performance API (커넥션 재사용 상태)</td></tr>
+          <tr><td>나머지</td><td class="n">약 60 ms</td><td><strong>추정</strong> — TCP slow-start 구간</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      CLI TTFB 34.4 ms 중 <strong>25.0 ms(72%)가 연결 수립 비용</strong>이고 서버가 응답을
+      시작하는 데 쓰는 시간은 8~9 ms 다. 브라우저가 커넥션을 재사용한 상태에서 독립적으로
+      측정한 순수 서버 응답 8.1 ms 가 CLI 의 잔차와 일치한다 — 두 하네스가 서버 구간에서
+      교차 검증됐다. 마지막 약 60 ms 는 slow-start 로 해석되나
+      <strong>측정으로 확인한 것이 아니라 추정이다.</strong>
+    </p>
+    <p class="note">
+      실무적 의미: 파일당 약 95 ms 의 고정 비용이 붙으므로, 작은 파일을 여러 번 받는 것보다
+      한 번에 받는 것이 유리하다.
+    </p>
+  </section>
+
+  <!-- 6 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">06</span>이 수치를 인용할 때 함께 밝힐 것</h2>
+    <div class="limits">
+      <div class="limit">
+        <b>Wi-Fi 노이즈가 포함되어 있다</b>
+        <p>
+          공유기까지의 RTT 가 avg <span class="mono">7.243 ms</span> /
+          mdev <span class="mono">11.61 ms</span> / 최대 <span class="mono">80.24 ms</span>
+          (손실 0%) 였다. mdev 가 avg 보다 크다는 것은 간헐적 스파이크가 있다는 뜻이며, 이
+          노이즈가 위 모든 측정값에 들어 있다. 유선으로 재면 CV 가 낮아질 것이다.
+        </p>
+      </div>
+      <div class="limit">
+        <b>서버 RTT 를 ping 으로 측정하지 못했다</b>
+        <p>
+          AWS 가 ICMP 를 차단해 30발 전부 손실됐다. traceroute 도 9홉까지만 응답하고 목적지에
+          도달하지 못했다. 대용으로 다운로드 TTFB 중앙값 <span class="mono">39.2 ms</span> 를
+          기재했다 — 왕복 1회와 서버 응답 시작을 포함하므로 RTT 의 상한 근사다.
+        </p>
+      </div>
+      <div class="limit">
+        <b>서버 상한은 하한 근사다</b>
+        <p>
+          loopback 으로 1.02~1.70 Gbps 를 실측했지만, 2 vCPU 에서 부하 생성기와 서버가 CPU 를
+          나눠 쓰므로 이 값은 상한의 <strong>하한 근사</strong>다. 실제 상한은 더 높다. 회선이
+          10 Gbps 급으로 바뀌면 이 값으로는 서버가 받아줄지 판단할 수 없고, 별도 부하
+          생성기를 둔 측정이 필요하다.
+        </p>
+      </div>
+      <div class="limit">
+        <b>tmpfs 가 아니라 EBS 에서 서빙됐다</b>
+        <p>
+          계획서는 tmpfs 서빙을 전제하지만, 측정이 실제로 때린 경로는
+          <code>/static/assets/a_*</code> (EBS gp3) 였다 — 서버 nginx 접근 로그로 확인했다.
+          이 조건에서도 회선 용량을 다 채웠으므로 결론은 바뀌지 않는다. 정적 파일을 내는 것은
+          nginx 가 아니라 FastAPI <code>StaticFiles</code> 이며 nginx 는
+          <code>proxy_pass</code> 만 한다.
+        </p>
+      </div>
+      <div class="limit">
+        <b>단일 지점 · 단일 시각이다</b>
+        <p>
+          가정 Wi-Fi, 자정 무렵 1회 측정이다. 시간대·위치를 바꾸면 값이 달라진다. 8월 측정의
+          목적은 도구 검증과 수치 감각 확보이며, 발표용 비교 데이터는 9월에 같은 장소·같은
+          기기·같은 시간에 AWS 와 KOREN 을 동시 측정해 얻는다.
+        </p>
+      </div>
+      <div class="limit">
+        <b>업로드 p95 와 동시성 스윕이 없다</b>
+        <p>
+          R=20 이라 표본이 30 미만이어서 p95 를 산출하지 않았다. 업로드 동시성도 재지 않았다 —
+          가정용 상향 대역이 낮아 C 를 올리면 회선만 포화되기 때문이다. 업로드 합계도 70 Mbps
+          대에서 포화할 것으로 보이나 <strong>이는 측정하지 않은 추정이다.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 ─────────────────────────────────────────────────────────────── -->
+  <section>
+    <h2><span class="num">07</span>9월 KOREN 비교를 위한 기준선</h2>
+    <div class="tw">
+      <table>
+        <caption>8월 AWS 상용망 기준선</caption>
+        <thead><tr><th>항목</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td>다운로드 최고 (단일)</td><td class="n hi">341.38 Mbps</td></tr>
+          <tr><td>다운로드 최고 (합계)</td><td class="n hi">393.26 Mbps</td></tr>
+          <tr><td>업로드 최고</td><td class="n hi">69.60 Mbps</td></tr>
+          <tr class="accent"><td>서버 상한 (loopback, 하한 근사)</td><td class="n hi">1,016 – 1,696 Mbps</td></tr>
+          <tr><td>요청당 고정 비용</td><td class="n">약 95 ms</td></tr>
+          <tr><td>TTFB 중앙값</td><td class="n">39.2 ms</td></tr>
+          <tr><td>비대칭비</td><td class="n hi">4.91 : 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>비교 시 반드시 지킬 것</h3>
+    <ol class="checks">
+      <li><strong>같은 파일을 쓴다.</strong> 씬을 재생성하지 않는다. 세 파일의 sha256 이 기록되어 있다.</li>
+      <li><strong><code>recv</code> 를 빼지 않는다.</strong> 서버 작업은 <code>store + db</code> 뿐이다.</li>
+      <li><strong>KOREN 처리량을 서버 상한과 대조한다.</strong> 서버 상한은 1.02~1.70 Gbps 로 실측됐다. KOREN 측정치가 이 구간에 근접하면 회선이 아니라 서버에 걸린 것이므로 개선폭이 과소평가된다 — 그때는 loopback 을 다시 재고 부하 생성기를 분리한다.</li>
+      <li><strong>loopback 도 같은 <code>a_*</code> 경로를 잰다.</strong> 매체가 다른 두 값으로 비율을 내면 3배 판정이 오염된다.</li>
+      <li><strong>스로틀 카운터를 대조한다.</strong> t3 계열은 네트워크가 버스터블이며, 크레딧이 마른 구간의 측정값은 회선이 아니라 AWS 정책을 잰 것이다.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <div>
+      원시 데이터 · <span class="mono">results/transfer_20260813_0006_commercial.json</span> (다운로드 530) ·
+      <span class="mono">…_0019_commercial.json</span> (업로드 60) ·
+      <span class="mono">…_0100_commercial.browser.json</span> (브라우저 35, 보조)
+    </div>
+    <div>
+      집계표 <span class="mono">results/summary_20260813.md</span> ·
+      실행 기록 <span class="mono">results/transfer_run_journal.md</span> ·
+      원시 로그 <span class="mono">results/logs/</span>
+    </div>
+    <div>
+      브라우저 측정값은 커넥션 재사용 때문에 CLI 와 다르게 나오므로(작은 파일에서 최대 −22%)
+      집계와 발표에는 CLI 결과만 쓴다.
+    </div>
+  </footer>
+
+</div>

@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-08-09T10:19:46.792028+09:00",
+  "platform": {
+    "system": "Darwin",
+    "release": "24.6.0",
+    "machine": "x86_64",
+    "cpu": "Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz"
+  },
+  "python": {
+    "venv": ".venv",
+    "version": "3.14.0",
+    "ifcopenshell": "0.8.5",
+    "trimesh": "5.0.0",
+    "numpy": "2.5.1",
+    "pandas": "3.0.5"
+  },
+  "node": {
+    "node": "v22.20.0",
+    "npm": "10.9.3",
+    "gltf_transform": "4.4.2",
+    "install": "local (node_modules/.bin), not -g"
+  },
+  "ifcconvert": {
+    "path": "tools/IfcConvert",
+    "version": "IfcOpenShell IfcConvert 0.8.6-e333c1c (OCC 7.8.1)",
+    "build": "IfcConvert-v0.8.6-e333c1c-macos64.zip (s3://ifcopenshell-builds)",
+    "supported_outputs": [
+      "obj",
+      "dae",
+      "glb",
+      "stp",
+      "igs",
+      "xml",
+      "json",
+      "rdb",
+      "svg",
+      "h5",
+      "ttl",
+      "ifc"
+    ],
+    "note": "0.8.6 supports .glb natively -> direct conversion path available"
+  },
+  "assimp": {
+    "version": "Version 6.0 -shared -st (GIT commit 0)",
+    "install": "homebrew assimp 6.0.5"
+  }
+}

@@ -1,0 +1,113 @@
+
+[1m== 대상 — AWS_HOST_REDACTED (https://AWS_HOST_REDACTED)[0m
+
+[1m== 1/5  사전 확인[0m
+   IFC 변환 잡 — running/queued 0건 (skipped=63)
+   부하 —  21:56:14 up 1 day, 23:00,  1 user,  load average: 0.15, 0.04, 0.01
+
+[1m== 2/5  /etc/hosts → 127.0.0.1 AWS_HOST_REDACTED[0m
+   127.0.0.1       AWS_HOST_REDACTED
+
+[1m== 3/5  경로 검증[0m
+   ✓ 연결 IP      127.0.0.1
+   ✓ 상태         200
+   ✓ content-length 36637416
+   ✓ 수신 바이트 36637416
+   ✓ server         nginx/1.24.0 (Ubuntu)
+   ✓ 디스크 원본 36637416
+
+[1m== 4/5  측정 실행[0m
+   python3 /home/ubuntu/ofk-measure/scripts/measure.py --target https://AWS_HOST_REDACTED --label loopback --targets /home/ubuntu/ofk-measure/results/download_targets_commercial.json --location other --network-type wired --server-version OF_KOR_3D Server 0.1.0 / nginx 1.24.0 --ebs-type gp3 --serving ebs gp3 (/static/assets/a_*, FastAPI StaticFiles + nginx proxy_pass) --skip-probes
+
+== 세션 20260814_2156_other
+   타겟 https://AWS_HOST_REDACTED  라벨 loopback
+   위치 other / 회선 wired
+   다운로드 매트릭스 egress 예상 5.3 GB
+
+-- 다운로드 site_stacked/raw (339.23 MB) C=1 R=10 (+워밍업 1라운드, 총 10 샘플)
+   [워밍업]    2302.8 ms — 폐기
+   [  1/10] p50    1609.1 ms | min   1609.1 max   1609.1
+   [  2/10] p50    1609.3 ms | min   1609.3 max   1609.3
+   [  3/10] p50    1530.6 ms | min   1530.6 max   1530.6
+   [  4/10] p50    1600.3 ms | min   1600.3 max   1600.3
+   [  5/10] p50    1558.0 ms | min   1558.0 max   1558.0
+   [  6/10] p50    1702.9 ms | min   1702.9 max   1702.9
+   [  7/10] p50    1608.6 ms | min   1608.6 max   1608.6
+   [  8/10] p50    1599.9 ms | min   1599.9 max   1599.9
+   [  9/10] p50    1533.7 ms | min   1533.7 max   1533.7
+   [ 10/10] p50    1570.6 ms | min   1570.6 max   1570.6
+
+-- 다운로드 site_stacked/meshopt (36.64 MB) C=1 R=30 (+워밍업 1라운드, 총 30 샘플)
+   [워밍업]     221.8 ms — 폐기
+   [  1/30] p50     197.3 ms | min    197.3 max    197.3
+   [  2/30] p50     229.5 ms | min    229.5 max    229.5
+   [  3/30] p50     228.9 ms | min    228.9 max    228.9
+   [  4/30] p50     202.7 ms | min    202.7 max    202.7
+   [  5/30] p50     208.8 ms | min    208.8 max    208.8
+   [  6/30] p50     205.6 ms | min    205.6 max    205.6
+   [  7/30] p50     256.1 ms | min    256.1 max    256.1
+   [  8/30] p50     236.7 ms | min    236.7 max    236.7
+   [  9/30] p50     185.9 ms | min    185.9 max    185.9
+   [ 10/30] p50     193.8 ms | min    193.8 max    193.8
+   [ 11/30] p50     221.1 ms | min    221.1 max    221.1
+   [ 12/30] p50     208.8 ms | min    208.8 max    208.8
+   [ 13/30] p50     212.7 ms | min    212.7 max    212.7
+   [ 14/30] p50     197.8 ms | min    197.8 max    197.8
+   [ 15/30] p50     208.7 ms | min    208.7 max    208.7
+   [ 16/30] p50     243.6 ms | min    243.6 max    243.6
+   [ 17/30] p50     219.7 ms | min    219.7 max    219.7
+   [ 18/30] p50     205.7 ms | min    205.7 max    205.7
+   [ 19/30] p50     219.3 ms | min    219.3 max    219.3
+   [ 20/30] p50     195.2 ms | min    195.2 max    195.2
+   [ 21/30] p50     207.9 ms | min    207.9 max    207.9
+   [ 22/30] p50     200.2 ms | min    200.2 max    200.2
+   [ 23/30] p50     214.9 ms | min    214.9 max    214.9
+   [ 24/30] p50     232.2 ms | min    232.2 max    232.2
+   [ 25/30] p50     226.7 ms | min    226.7 max    226.7
+   [ 26/30] p50     226.8 ms | min    226.8 max    226.8
+   [ 27/30] p50     214.8 ms | min    214.8 max    214.8
+   [ 28/30] p50     220.5 ms | min    220.5 max    220.5
+   [ 29/30] p50     228.8 ms | min    228.8 max    228.8
+   [ 30/30] p50     204.8 ms | min    204.8 max    204.8
+
+-- 다운로드 site_stacked/draco (13.60 MB) C=1 R=30 (+워밍업 1라운드, 총 30 샘플)
+   [워밍업]     102.0 ms — 폐기
+   [  1/30] p50      92.6 ms | min     92.6 max     92.6
+   [  2/30] p50     102.6 ms | min    102.6 max    102.6
+   [  3/30] p50     108.7 ms | min    108.7 max    108.7
+   [  4/30] p50     112.8 ms | min    112.8 max    112.8
+   [  5/30] p50     113.5 ms | min    113.5 max    113.5
+   [  6/30] p50     103.0 ms | min    103.0 max    103.0
+   [  7/30] p50      94.2 ms | min     94.2 max     94.2
+   [  8/30] p50     111.7 ms | min    111.7 max    111.7
+   [  9/30] p50      90.6 ms | min     90.6 max     90.6
+   [ 10/30] p50     114.0 ms | min    114.0 max    114.0
+   [ 11/30] p50     116.3 ms | min    116.3 max    116.3
+   [ 12/30] p50     115.5 ms | min    115.5 max    115.5
+   [ 13/30] p50      94.1 ms | min     94.1 max     94.1
+   [ 14/30] p50     101.6 ms | min    101.6 max    101.6
+   [ 15/30] p50     113.5 ms | min    113.5 max    113.5
+   [ 16/30] p50      97.7 ms | min     97.7 max     97.7
+   [ 17/30] p50     107.0 ms | min    107.0 max    107.0
+   [ 18/30] p50      93.5 ms | min     93.5 max     93.5
+   [ 19/30] p50     112.5 ms | min    112.5 max    112.5
+   [ 20/30] p50     119.7 ms | min    119.7 max    119.7
+   [ 21/30] p50      95.5 ms | min     95.5 max     95.5
+   [ 22/30] p50      94.1 ms | min     94.1 max     94.1
+   [ 23/30] p50      91.5 ms | min     91.5 max     91.5
+   [ 24/30] p50     115.7 ms | min    115.7 max    115.7
+   [ 25/30] p50      90.1 ms | min     90.1 max     90.1
+   [ 26/30] p50     114.7 ms | min    114.7 max    114.7
+   [ 27/30] p50     115.6 ms | min    115.6 max    115.6
+   [ 28/30] p50     109.3 ms | min    109.3 max    109.3
+   [ 29/30] p50     105.7 ms | min    105.7 max    105.7
+   [ 30/30] p50     112.9 ms | min    112.9 max    112.9
+
+원시 데이터 → /home/ubuntu/ofk-measure/results/transfer_20260814_2156_loopback.json
+집계        → python scripts/report.py /home/ubuntu/ofk-measure/results/transfer_20260814_2156_loopback.json
+
+[1m== 5/5  스로틀 카운터 대조[0m
+   ✓ ENA 스로틀 카운터 변화 없음 — 트래픽이 ENI 를 거치지 않았습니다
+
+[1m== 복구  /etc/hosts[0m
+   복구 완료 — 127.0.0.1       localhost AWS_HOST_REDACTED

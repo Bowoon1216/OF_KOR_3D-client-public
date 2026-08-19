@@ -1,0 +1,104 @@
+{
+  "site_minimal": {
+    "scene": "site_minimal",
+    "status": "ok",
+    "path": "assets/scenes/site_minimal.glb",
+    "description": "측정 대상 씬. spa 미확보로 boomlift 중심 + hoist/rooflight 로 용량 확보.",
+    "placements": [
+      {
+        "alias": "boomlift",
+        "offset_m": [
+          0,
+          0,
+          0
+        ],
+        "unit_scale": 1.0,
+        "size_bytes": 10972644
+      },
+      {
+        "alias": "hoist",
+        "offset_m": [
+          15,
+          0,
+          0
+        ],
+        "unit_scale": 1.0,
+        "size_bytes": 16978280
+      }
+    ],
+    "filler_count": 9,
+    "filler_alias": "rooflight",
+    "omitted": [
+      "spa (원본 IFC 미확보)"
+    ],
+    "compose_seconds": 1.616,
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "built_at": "2026-08-09T11:09:21.812728+09:00",
+    "glb_size_bytes": 51746668,
+    "triangle_count": 788628,
+    "vertex_count": 1903342,
+    "mesh_count": 22,
+    "primitive_count": 197,
+    "node_count": 42,
+    "material_count": 58,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json"
+  },
+  "site_stacked": {
+    "scene": "site_stacked",
+    "status": "ok",
+    "path": "assets/scenes/site_stacked.glb",
+    "description": "hoist 20단 적층. 전송 측정용 대용량 단일 파일 (측정 계획 §2.1).",
+    "placements": [],
+    "stack": {
+      "alias": "hoist",
+      "count": 20,
+      "axis": "z",
+      "spacing_m": 8.874,
+      "scale_step": 0.003,
+      "total_height_m": 182.533,
+      "unit_scale": 1.0,
+      "unit_size_bytes": 16978220,
+      "baked": "positions (dedup 방지)"
+    },
+    "filler_count": 0,
+    "filler_alias": null,
+    "omitted": [],
+    "compose_seconds": 8.138,
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "built_at": "2026-08-10T08:25:13.729166+09:00",
+    "glb_size_bytes": 339231180,
+    "triangle_count": 5579960,
+    "vertex_count": 14226960,
+    "mesh_count": 60,
+    "primitive_count": 2120,
+    "node_count": 260,
+    "material_count": 320,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json"
+  }
+}

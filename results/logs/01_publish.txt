@@ -1,0 +1,10 @@
+로그인 완료
+  업로드 site_stacked_raw.glb (339.23 MB) …
+    → /static/assets/a_56077c0a/site_stacked_raw.glb  (42.4s)
+  업로드 site_stacked_meshopt.glb (36.64 MB) …
+    → /static/assets/a_ddfbb893/site_stacked_meshopt.glb  (4.6s)
+  업로드 site_stacked_draco.glb (13.60 MB) …
+    → /static/assets/a_0db8b84f/site_stacked_draco.glb  (1.7s)
+
+대상 목록 → /Users/apple/Documents/OF_KOR_3D/results/download_targets_commercial.json
+이제: python scripts/measure.py --target https://AWS_HOST_REDACTED --label commercial

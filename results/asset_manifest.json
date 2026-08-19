@@ -1,0 +1,1059 @@
+{
+  "rooflight": {
+    "alias": "rooflight",
+    "source_ifc": "assets/raw/Windows-Skylights_Kingspan-Light-Air_Ecodis-Ecoplan_ISO_plus-3D.ifc",
+    "ifc_size_bytes": 4929672,
+    "glb_path": "assets/converted/rooflight.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 18.576,
+    "conversion_peak_rss_mb": 807.2,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 18.576,
+        "peak_rss_mb": 807.2,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   1  voluntary context switches",
+          "                 969  involuntary context switches",
+          "         91510219934  instructions retired",
+          "         48008233250  cycles elapsed",
+          "           490422272  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 2648436,
+    "triangle_count": 39268,
+    "vertex_count": 90500,
+    "mesh_count": 2,
+    "primitive_count": 5,
+    "node_count": 2,
+    "material_count": 4,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:53:19.042622+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/rooflight_raw.glb",
+        "size_bytes": 2648436,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 39268,
+        "node_count": 2,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": []
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/rooflight_draco.glb",
+        "size_bytes": 123980,
+        "ratio_vs_raw": 0.0468,
+        "saving_pct": 95.32,
+        "triangle_count": 39268,
+        "node_count": 2,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ]
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/rooflight_meshopt.glb",
+        "size_bytes": 397124,
+        "ratio_vs_raw": 0.1499,
+        "saving_pct": 85.01,
+        "triangle_count": 39268,
+        "node_count": 2,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ]
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/rooflight_full.glb",
+        "size_bytes": 397124,
+        "ratio_vs_raw": 0.1499,
+        "saving_pct": 85.01,
+        "triangle_count": 39268,
+        "node_count": 2,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:02:51.570189+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/rooflight_instanced.glb",
+      "seconds": 0.675,
+      "before": {
+        "size_bytes": 2648436,
+        "node_count": 2,
+        "mesh_count": 2,
+        "primitive_count": 5,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 2647360,
+        "node_count": 2,
+        "mesh_count": 2,
+        "primitive_count": 5,
+        "instanced_nodes": 0
+      },
+      "size_delta_bytes": -1076,
+      "size_saving_pct": 0.04,
+      "node_delta": 0,
+      "effective": false
+    }
+  },
+  "boomlift": {
+    "alias": "boomlift",
+    "source_ifc": "assets/raw/Construction_Aerial-Equipment_Haulotte_H18SXL_INT.ifc",
+    "ifc_size_bytes": 19904453,
+    "glb_path": "assets/converted/boomlift.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 97.62,
+    "conversion_peak_rss_mb": 2214.5,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 97.62,
+        "peak_rss_mb": 2214.5,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   0  voluntary context switches",
+          "               10270  involuntary context switches",
+          "        473794830740  instructions retired",
+          "        252037388585  cycles elapsed",
+          "          1476714496  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 10972608,
+    "triangle_count": 156218,
+    "vertex_count": 377494,
+    "mesh_count": 1,
+    "primitive_count": 46,
+    "node_count": 1,
+    "material_count": 6,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:49:16.428759+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/boomlift_raw.glb",
+        "size_bytes": 10972608,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 156218,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.005
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/boomlift_draco.glb",
+        "size_bytes": 493548,
+        "ratio_vs_raw": 0.045,
+        "saving_pct": 95.5,
+        "triangle_count": 156218,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 1.279
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/boomlift_meshopt.glb",
+        "size_bytes": 1690532,
+        "ratio_vs_raw": 0.1541,
+        "saving_pct": 84.59,
+        "triangle_count": 156218,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 1.145
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/boomlift_full.glb",
+        "size_bytes": 1690532,
+        "ratio_vs_raw": 0.1541,
+        "saving_pct": 84.59,
+        "triangle_count": 156218,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 1.172,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:02:55.180119+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/boomlift_instanced.glb",
+      "seconds": 0.8,
+      "before": {
+        "size_bytes": 10972608,
+        "node_count": 1,
+        "mesh_count": 1,
+        "primitive_count": 46,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 10961092,
+        "node_count": 1,
+        "mesh_count": 1,
+        "primitive_count": 46,
+        "instanced_nodes": 0
+      },
+      "size_delta_bytes": -11516,
+      "size_saving_pct": 0.1,
+      "node_delta": 0,
+      "effective": false
+    }
+  },
+  "elevator": {
+    "alias": "elevator",
+    "source_ifc": "assets/raw/Construction_Escalators_thyssenkrupp_peak-traffic-victoria-EN-European-standard-27-3.ifc",
+    "ifc_size_bytes": 1941894,
+    "glb_path": "assets/converted/elevator.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 7.181,
+    "conversion_peak_rss_mb": 278.8,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 7.181,
+        "peak_rss_mb": 278.8,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   3  voluntary context switches",
+          "                 654  involuntary context switches",
+          "         34836134665  instructions retired",
+          "         18543070924  cycles elapsed",
+          "            97697792  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 1006332,
+    "triangle_count": 10838,
+    "vertex_count": 32514,
+    "mesh_count": 1,
+    "primitive_count": 100,
+    "node_count": 1,
+    "material_count": 100,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:49:24.821161+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/elevator_raw.glb",
+        "size_bytes": 1006332,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 10838,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.001
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/elevator_draco.glb",
+        "size_bytes": 131776,
+        "ratio_vs_raw": 0.1309,
+        "saving_pct": 86.91,
+        "triangle_count": 10838,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 0.798
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/elevator_meshopt.glb",
+        "size_bytes": 237796,
+        "ratio_vs_raw": 0.2363,
+        "saving_pct": 76.37,
+        "triangle_count": 10838,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.767
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/elevator_full.glb",
+        "size_bytes": 237796,
+        "ratio_vs_raw": 0.2363,
+        "saving_pct": 76.37,
+        "triangle_count": 10838,
+        "node_count": 1,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.776,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:02:57.538810+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/elevator_instanced.glb",
+      "seconds": 0.676,
+      "before": {
+        "size_bytes": 1006332,
+        "node_count": 1,
+        "mesh_count": 1,
+        "primitive_count": 100,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 982676,
+        "node_count": 1,
+        "mesh_count": 1,
+        "primitive_count": 100,
+        "instanced_nodes": 0
+      },
+      "size_delta_bytes": -23656,
+      "size_saving_pct": 2.35,
+      "node_delta": 0,
+      "effective": false
+    }
+  },
+  "hoist": {
+    "alias": "hoist",
+    "source_ifc": "assets/raw/S650_single_L=3.9m 1500mm raised enclosure.ifc",
+    "ifc_size_bytes": 32896830,
+    "glb_path": "assets/converted/hoist.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 195.969,
+    "conversion_peak_rss_mb": 2587.0,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 195.969,
+        "peak_rss_mb": 2587.0,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   3  voluntary context switches",
+          "               13412  involuntary context switches",
+          "       1001318912750  instructions retired",
+          "        505831011900  cycles elapsed",
+          "          1390583808  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 16978220,
+    "triangle_count": 278998,
+    "vertex_count": 711348,
+    "mesh_count": 3,
+    "primitive_count": 106,
+    "node_count": 12,
+    "material_count": 16,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:52:41.607533+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/hoist_raw.glb",
+        "size_bytes": 16978220,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 278998,
+        "node_count": 12,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.046
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/hoist_draco.glb",
+        "size_bytes": 679052,
+        "ratio_vs_raw": 0.04,
+        "saving_pct": 96.0,
+        "triangle_count": 278998,
+        "node_count": 12,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 1.407
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/hoist_meshopt.glb",
+        "size_bytes": 2660736,
+        "ratio_vs_raw": 0.1567,
+        "saving_pct": 84.33,
+        "triangle_count": 278998,
+        "node_count": 12,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 1.383
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/hoist_full.glb",
+        "size_bytes": 2660736,
+        "ratio_vs_raw": 0.1567,
+        "saving_pct": 84.33,
+        "triangle_count": 278998,
+        "node_count": 12,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 1.45,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:03:01.838653+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/hoist_instanced.glb",
+      "seconds": 0.951,
+      "before": {
+        "size_bytes": 16978220,
+        "node_count": 12,
+        "mesh_count": 3,
+        "primitive_count": 106,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 16959564,
+        "node_count": 3,
+        "mesh_count": 3,
+        "primitive_count": 79,
+        "instanced_nodes": 1
+      },
+      "size_delta_bytes": -18656,
+      "size_saving_pct": 0.11,
+      "node_delta": -9,
+      "effective": true
+    }
+  },
+  "shingle_a": {
+    "alias": "shingle_a",
+    "source_ifc": "assets/raw/VMZINC_SHI RECT-590x885-Aligned jts.ifc",
+    "ifc_size_bytes": 2475001,
+    "glb_path": "assets/converted/shingle_a.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 18.16,
+    "conversion_peak_rss_mb": 407.2,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 18.16,
+        "peak_rss_mb": 407.2,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   4  voluntary context switches",
+          "                1258  involuntary context switches",
+          "         88023658012  instructions retired",
+          "         46738225412  cycles elapsed",
+          "           299683840  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 4609624,
+    "triangle_count": 94180,
+    "vertex_count": 143772,
+    "mesh_count": 28,
+    "primitive_count": 28,
+    "node_count": 28,
+    "material_count": 15,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:53:01.364222+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/shingle_a_raw.glb",
+        "size_bytes": 4609624,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 94180,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.003
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/shingle_a_draco.glb",
+        "size_bytes": 274116,
+        "ratio_vs_raw": 0.0595,
+        "saving_pct": 94.05,
+        "triangle_count": 94180,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 0.97
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/shingle_a_meshopt.glb",
+        "size_bytes": 672256,
+        "ratio_vs_raw": 0.1458,
+        "saving_pct": 85.42,
+        "triangle_count": 94180,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.883
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/shingle_a_full.glb",
+        "size_bytes": 672256,
+        "ratio_vs_raw": 0.1458,
+        "saving_pct": 85.42,
+        "triangle_count": 94180,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.879,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:03:04.581094+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/shingle_a_instanced.glb",
+      "seconds": 0.719,
+      "before": {
+        "size_bytes": 4609624,
+        "node_count": 28,
+        "mesh_count": 28,
+        "primitive_count": 28,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 4603336,
+        "node_count": 28,
+        "mesh_count": 28,
+        "primitive_count": 28,
+        "instanced_nodes": 0
+      },
+      "size_delta_bytes": -6288,
+      "size_saving_pct": 0.14,
+      "node_delta": 0,
+      "effective": false
+    }
+  },
+  "shingle_b": {
+    "alias": "shingle_b",
+    "source_ifc": "assets/raw/VMZINC_SHI_RECT-420x630-Nn aligned jts.ifc",
+    "ifc_size_bytes": 2450325,
+    "glb_path": "assets/converted/shingle_b.glb",
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 15.814,
+    "conversion_peak_rss_mb": 372.5,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 15.814,
+        "peak_rss_mb": 372.5,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   1  voluntary context switches",
+          "                 165  involuntary context switches",
+          "         76950180731  instructions retired",
+          "         40938963121  cycles elapsed",
+          "           280031232  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 4600328,
+    "triangle_count": 93812,
+    "vertex_count": 143568,
+    "mesh_count": 28,
+    "primitive_count": 28,
+    "node_count": 28,
+    "material_count": 15,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T10:53:18.112550+09:00",
+    "validation": {
+      "ok": true,
+      "counts": {
+        "error": 0,
+        "warning": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "issues": {}
+    },
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/converted/shingle_b_raw.glb",
+        "size_bytes": 4600328,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 93812,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.005
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/converted/shingle_b_draco.glb",
+        "size_bytes": 271080,
+        "ratio_vs_raw": 0.0589,
+        "saving_pct": 94.11,
+        "triangle_count": 93812,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 0.91
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/converted/shingle_b_meshopt.glb",
+        "size_bytes": 675996,
+        "ratio_vs_raw": 0.1469,
+        "saving_pct": 85.31,
+        "triangle_count": 93812,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.917
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/converted/shingle_b_full.glb",
+        "size_bytes": 675996,
+        "ratio_vs_raw": 0.1469,
+        "saving_pct": 85.31,
+        "triangle_count": 93812,
+        "node_count": 28,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 0.885,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:03:07.305783+09:00",
+    "instancing": {
+      "status": "ok",
+      "path": "assets/converted/shingle_b_instanced.glb",
+      "seconds": 0.71,
+      "before": {
+        "size_bytes": 4600328,
+        "node_count": 28,
+        "mesh_count": 28,
+        "primitive_count": 28,
+        "instanced_nodes": 0
+      },
+      "after": {
+        "size_bytes": 4594080,
+        "node_count": 28,
+        "mesh_count": 28,
+        "primitive_count": 28,
+        "instanced_nodes": 0
+      },
+      "size_delta_bytes": -6248,
+      "size_saving_pct": 0.14,
+      "node_delta": 0,
+      "effective": false
+    }
+  },
+  "boomlift_reuse": {
+    "alias": "boomlift",
+    "source_ifc": "assets/raw/Construction_Aerial-Equipment_Haulotte_H18SXL_INT.ifc",
+    "ifc_size_bytes": 19904453,
+    "glb_path": "assets/converted/boomlift_reuse.glb",
+    "ifcconvert_args": [
+      "--permissive-shape-reuse"
+    ],
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 91.551,
+    "conversion_peak_rss_mb": 2200.7,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 91.551,
+        "peak_rss_mb": 2200.7,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   4  voluntary context switches",
+          "               22995  involuntary context switches",
+          "        419629136833  instructions retired",
+          "        234735688323  cycles elapsed",
+          "          1486897152  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 10972608,
+    "triangle_count": 156218,
+    "vertex_count": 377494,
+    "mesh_count": 1,
+    "primitive_count": 46,
+    "node_count": 1,
+    "material_count": 6,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T11:10:34.100978+09:00"
+  },
+  "hoist_reuse": {
+    "alias": "hoist",
+    "source_ifc": "assets/raw/S650_single_L=3.9m 1500mm raised enclosure.ifc",
+    "ifc_size_bytes": 32896830,
+    "glb_path": "assets/converted/hoist_reuse.glb",
+    "ifcconvert_args": [
+      "--permissive-shape-reuse"
+    ],
+    "conversion_status": "ok",
+    "conversion_path": "direct",
+    "conversion_seconds": 209.512,
+    "conversion_peak_rss_mb": 2664.3,
+    "conversion_attempts": [
+      {
+        "path": "direct",
+        "ok": true,
+        "seconds": 209.512,
+        "peak_rss_mb": 2664.3,
+        "log_tail": [
+          "                   0  messages sent",
+          "                   0  messages received",
+          "                   0  signals received",
+          "                   4  voluntary context switches",
+          "                9438  involuntary context switches",
+          "       1040695451224  instructions retired",
+          "        541766400853  cycles elapsed",
+          "          1404108800  peak memory footprint"
+        ]
+      }
+    ],
+    "glb_size_bytes": 16978220,
+    "triangle_count": 278998,
+    "vertex_count": 711348,
+    "mesh_count": 3,
+    "primitive_count": 106,
+    "node_count": 12,
+    "material_count": 16,
+    "texture_count": 0,
+    "has_uv": false,
+    "instanced_nodes": 0,
+    "extensions_used": [],
+    "inspect_source": "gltf-json",
+    "converted_at": "2026-08-09T11:14:03.621375+09:00"
+  },
+  "site_minimal": {
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/scenes/site_minimal_raw.glb",
+        "size_bytes": 51746668,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 788628,
+        "node_count": 42,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.116
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/scenes/site_minimal_draco.glb",
+        "size_bytes": 2286644,
+        "ratio_vs_raw": 0.0442,
+        "saving_pct": 95.58,
+        "triangle_count": 788628,
+        "node_count": 42,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 3.243
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/scenes/site_minimal_meshopt.glb",
+        "size_bytes": 4755872,
+        "ratio_vs_raw": 0.0919,
+        "saving_pct": 90.81,
+        "triangle_count": 788628,
+        "node_count": 42,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 2.674
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/scenes/site_minimal_full.glb",
+        "size_bytes": 4755872,
+        "ratio_vs_raw": 0.0919,
+        "saving_pct": 90.81,
+        "triangle_count": 788628,
+        "node_count": 42,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 2.668,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-09T11:15:51.964644+09:00"
+  },
+  "site_stacked": {
+    "variants": {
+      "raw": {
+        "status": "ok",
+        "path": "assets/scenes/site_stacked_raw.glb",
+        "size_bytes": 339231180,
+        "ratio_vs_raw": 1.0,
+        "saving_pct": 0.0,
+        "triangle_count": 5579960,
+        "node_count": 260,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [],
+        "seconds": 0.118
+      },
+      "draco": {
+        "status": "ok",
+        "path": "assets/scenes/site_stacked_draco.glb",
+        "size_bytes": 13595320,
+        "ratio_vs_raw": 0.0401,
+        "saving_pct": 95.99,
+        "triangle_count": 5579960,
+        "node_count": 260,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "KHR_draco_mesh_compression"
+        ],
+        "seconds": 14.881
+      },
+      "meshopt": {
+        "status": "ok",
+        "path": "assets/scenes/site_stacked_meshopt.glb",
+        "size_bytes": 36637416,
+        "ratio_vs_raw": 0.108,
+        "saving_pct": 89.2,
+        "triangle_count": 5579960,
+        "node_count": 260,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 12.238
+      },
+      "full": {
+        "status": "ok",
+        "path": "assets/scenes/site_stacked_full.glb",
+        "size_bytes": 36637416,
+        "ratio_vs_raw": 0.108,
+        "saving_pct": 89.2,
+        "triangle_count": 5579960,
+        "node_count": 260,
+        "texture_count": 0,
+        "has_uv": false,
+        "extensions_used": [
+          "EXT_meshopt_compression",
+          "KHR_mesh_quantization"
+        ],
+        "seconds": 12.189,
+        "skipped_steps": [
+          "uastc (texture_count == 0)"
+        ]
+      }
+    },
+    "variants_built_at": "2026-08-10T08:25:53.416977+09:00"
+  }
+}

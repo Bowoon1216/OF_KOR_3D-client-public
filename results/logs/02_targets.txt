@@ -1,0 +1,34 @@
+label: commercial | published: 2026-08-13T00:05:54.038427+09:00
+
+[raw]
+  url            /static/assets/a_56077c0a/site_stacked_raw.glb
+  로컬 크기       339,231,180 bytes
+  서버 크기       339,231,180 bytes
+  Content-Length 339231180
+  sha256 일치     True  (81157c4c507b1905…)
+  HTTP           200  model/gltf-binary
+  Cache-Control  no-store, no-cache, must-revalidate
+  TAO            *
+  Accept-Ranges  bytes  | Server nginx/1.24.0 (Ubuntu)
+
+[meshopt]
+  url            /static/assets/a_ddfbb893/site_stacked_meshopt.glb
+  로컬 크기       36,637,416 bytes
+  서버 크기       36,637,416 bytes
+  Content-Length 36637416
+  sha256 일치     True  (b24152cb4c1b5771…)
+  HTTP           200  model/gltf-binary
+  Cache-Control  no-store, no-cache, must-revalidate
+  TAO            *
+  Accept-Ranges  bytes  | Server nginx/1.24.0 (Ubuntu)
+
+[draco]
+  url            /static/assets/a_0db8b84f/site_stacked_draco.glb
+  로컬 크기       13,595,320 bytes
+  서버 크기       13,595,320 bytes
+  Content-Length 13595320
+  sha256 일치     True  (bad876fa1f8c7e3a…)
+  HTTP           200  model/gltf-binary
+  Cache-Control  no-store, no-cache, must-revalidate
+  TAO            *
+  Accept-Ranges  bytes  | Server nginx/1.24.0 (Ubuntu)

@@ -1,0 +1,430 @@
+<title>KOREN 을 써야 할 이유</title>
+<style>
+  /* 앞선 회선 비대칭 보고서와 같은 팔레트를 쓴다 — 같은 측정 시리즈의 후속편이다.
+     방향색(다운/업) 자리를 여기서는 대상색(AWS/KOREN)이 이어받는다. */
+  :root {
+    --paper:#F6F7F9; --surface:#FFFFFF; --surface-2:#EEF1F4;
+    --rule:#D6DBE1; --rule-soft:#E4E8ED;
+    --ink:#141821; --ink-2:#3D4654; --neutral:#6B7583;
+    --aws:#16607F; --aws-soft:#CFE0E8;
+    --koren:#8A5A18; --koren-soft:#EADFC9;
+    --flag:#7A4A55; --ok:#3F6B4A;
+    --shadow:0 1px 2px rgba(20,24,33,.06), 0 8px 24px -16px rgba(20,24,33,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#101319; --surface:#171B23; --surface-2:#1E232C;
+      --rule:#2C333E; --rule-soft:#232933;
+      --ink:#E8EBEF; --ink-2:#B4BCC7; --neutral:#8B95A3;
+      --aws:#6FB6D4; --aws-soft:#1D3D4C;
+      --koren:#D3A25A; --koren-soft:#40331C;
+      --flag:#C79AA4; --ok:#8FBF9C;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#101319; --surface:#171B23; --surface-2:#1E232C;
+    --rule:#2C333E; --rule-soft:#232933;
+    --ink:#E8EBEF; --ink-2:#B4BCC7; --neutral:#8B95A3;
+    --aws:#6FB6D4; --aws-soft:#1D3D4C;
+    --koren:#D3A25A; --koren-soft:#40331C;
+    --flag:#C79AA4; --ok:#8FBF9C;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard",
+                "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-size:16px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:54rem; margin:0 auto;
+    padding:clamp(2rem,5vw,4.5rem) clamp(1.1rem,4vw,2.5rem) 6rem;
+    display:flex; flex-direction:column; gap:3.5rem; }
+  .mono { font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums; }
+
+  header { display:flex; flex-direction:column; gap:1.5rem; }
+  .eyebrow { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.72rem;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--neutral); }
+  h1 { margin:0; font-size:clamp(1.9rem,5.2vw,3rem); line-height:1.16;
+    letter-spacing:-.022em; font-weight:700; text-wrap:balance; }
+  .lede { margin:0; max-width:40rem; font-size:1.075rem; color:var(--ink-2); }
+
+  .spec { display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+    border:1px solid var(--rule); border-radius:3px; background:var(--surface); overflow:hidden; }
+  .spec div { padding:.8rem 1rem; border-right:1px solid var(--rule-soft);
+    border-bottom:1px solid var(--rule-soft); }
+  .spec dt { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.68rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--neutral); margin:0 0 .15rem; }
+  .spec dd { margin:0; font-size:.92rem; line-height:1.5; }
+
+  section { display:flex; flex-direction:column; gap:1.15rem; }
+  h2 { margin:0; font-size:1.4rem; letter-spacing:-.014em; font-weight:700;
+    display:flex; align-items:baseline; gap:.7rem;
+    padding-bottom:.6rem; border-bottom:2px solid var(--ink); }
+  h2 .num { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.8rem;
+    font-weight:500; color:var(--neutral); letter-spacing:.08em; }
+  h3 { margin:.9rem 0 0; font-size:1rem; font-weight:700; letter-spacing:-.008em; }
+  p { margin:0; max-width:44rem; }
+  p + p { margin-top:.3rem; }
+  code { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.875em;
+    background:var(--surface-2); padding:.1em .34em; border-radius:2px; }
+
+  /* 결론 카드 — 셋으로 갈린 판정 */
+  .verdicts { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; }
+  .v { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:1.1rem 1.2rem; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:.45rem; }
+  .v .tag { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.66rem;
+    letter-spacing:.12em; text-transform:uppercase; }
+  .v.hold .tag { color:var(--ok); }
+  .v.drop .tag { color:var(--flag); }
+  .v .big { font-size:1.55rem; font-weight:700; letter-spacing:-.02em; line-height:1.2;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-variant-numeric:tabular-nums; }
+  .v p { font-size:.86rem; color:var(--ink-2); }
+
+  /* 인원별 클라이언트당 속도 — 이 보고서의 논지 */
+  .chart { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+    padding:1.5rem clamp(1rem,3vw,1.75rem); box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:1.1rem; }
+  .grp { display:grid; grid-template-columns:4.5rem 1fr; gap:.9rem; align-items:center; }
+  .grp-label { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.78rem;
+    text-align:right; color:var(--ink-2); font-variant-numeric:tabular-nums; }
+  .pair { display:flex; flex-direction:column; gap:.28rem; }
+  .b { position:relative; height:1.45rem; background:var(--surface-2); border-radius:2px; }
+  .b i { position:absolute; inset:0 auto 0 0; width:var(--w); border-radius:2px; display:block; }
+  .b.aws i { background:var(--aws); }
+  .b.koren i { background:var(--koren); }
+  .b span { position:absolute; left:calc(var(--w) + .55rem); top:50%; transform:translateY(-50%);
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.72rem;
+    color:var(--neutral); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .legend { display:flex; flex-wrap:wrap; gap:.4rem 1.4rem; font-size:.82rem; color:var(--ink-2);
+    padding-top:.9rem; border-top:1px solid var(--rule-soft); }
+  .legend b { display:inline-flex; align-items:center; gap:.4rem; font-weight:400; }
+  .sw { width:.7rem; height:.7rem; border-radius:1px; display:inline-block; }
+
+  .tw { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+  table { width:100%; border-collapse:collapse; font-size:.875rem; }
+  caption { caption-side:top; text-align:left; padding:.7rem 1rem;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--neutral);
+    border-bottom:1px solid var(--rule-soft); background:var(--surface-2); }
+  th, td { padding:.5rem .85rem; text-align:left; border-bottom:1px solid var(--rule-soft); }
+  thead th { font-size:.72rem; letter-spacing:.04em; color:var(--neutral); font-weight:600;
+    white-space:nowrap; border-bottom:1px solid var(--rule); }
+  tbody tr:last-child td { border-bottom:none; }
+  .n { text-align:right; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .hi { font-weight:700; }
+  .ac { color:var(--aws); font-weight:700; }
+  .kc { color:var(--koren); font-weight:700; }
+  tbody tr.accent { background:var(--surface-2); }
+  .note { font-size:.82rem; color:var(--neutral); max-width:44rem; }
+
+  .limit { border-left:3px solid var(--flag); padding:.1rem 0 .1rem 1rem;
+    display:flex; flex-direction:column; gap:.25rem; }
+  .limit b { font-size:.95rem; }
+  .limit p { font-size:.9rem; color:var(--ink-2); }
+  .limits { display:flex; flex-direction:column; gap:1rem; }
+
+  ol.steps { margin:0; padding-left:1.35rem; display:flex; flex-direction:column; gap:.55rem; }
+  ol.steps li::marker { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:.82rem; color:var(--neutral); }
+
+  footer { border-top:1px solid var(--rule); padding-top:1.5rem; font-size:.82rem;
+    color:var(--neutral); display:flex; flex-direction:column; gap:.5rem; }
+  a { color:var(--aws); text-underline-offset:2px; }
+  a:focus-visible { outline:2px solid var(--aws); outline-offset:2px; }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">AWS vs KOREN 전송 성능 · 2026-08-13 ~ 08-14</div>
+  <h1>KOREN 을 써야 할 이유는 속도가 아니라 인원이다</h1>
+  <p class="lede">
+    11개 세션 1,595 샘플로 AWS 와 KOREN 을 같은 파일·같은 스크립트로 비교했다.
+    <strong>1인 전송에서는 KOREN 이 유리하지 않다.</strong> KOREN 이 이기는 지점은
+    참가자가 늘어 서버 상한이 먼저 걸릴 때다.
+  </p>
+  <dl class="spec">
+    <div><dt>클라이언트</dt><dd>가정 · LG U+ FTTH, Wi-Fi</dd></div>
+    <div><dt>AWS</dt><dd>t3.medium (2 vCPU/4GB)<br>https → nginx → uvicorn</dd></div>
+    <div><dt>KOREN</dt><dd>VM (4 vCPU/16GB)<br>http → uvicorn 직결</dd></div>
+    <div><dt>파일</dt><dd class="mono">sha256 양쪽 동일<br>339.23 / 36.64 / 13.60 MB</dd></div>
+  </dl>
+</header>
+
+<!-- 01 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">01</span>세 갈래 판정</h2>
+  <div class="verdicts">
+    <div class="v hold">
+      <span class="tag">✓ 성립</span>
+      <span class="big">2.01배</span>
+      <p><strong>다자간 클라이언트당 속도.</strong> 서버 상한이 KOREN 2,767.52 vs AWS
+      1,377.81 Mbps. 10인 방에서 참가자 1인당 속도가 2배다.</p>
+    </div>
+    <div class="v hold">
+      <span class="tag">✓ 성립</span>
+      <span class="big">546 방/월</span>
+      <p><strong>egress 한도.</strong> AWS 무료 100GB 로 5인 방 546개가 한계다.
+      넘으면 과금. KOREN 은 egress 과금이 없다.</p>
+    </div>
+    <div class="v drop">
+      <span class="tag">✗ 기각</span>
+      <span class="big">+0</span>
+      <p><strong>스로틀 회피.</strong> 329MB 연속 업로드로 AWS 정책 스로틀을
+      유발해 봤으나 카운터 0 증가. 소비자 회선으로는 임계에 닿지 않는다.</p>
+    </div>
+  </div>
+  <p class="note">
+    성립한 두 논거 모두 <strong>KOREN 망이 빠르다는 뜻이 아니다.</strong> ①은 받은 VM 이
+    2배 크다는 것이고(4 vCPU vs 2), ②는 과금 정책 차이다. 정확한 표현은
+    <strong>"같은 비용에 2배 용량, egress 무과금"</strong> 이다.
+  </p>
+</section>
+
+<!-- 02 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">02</span>1인 전송 — KOREN 이 유리하지 않다</h2>
+  <p>
+    같은 밤 4.5분 간격으로 AWS·KOREN 을 번갈아 2쌍 측정했다 (세션당 n=60). 이렇게 해야
+    회선 드리프트가 신호를 덮는지 판정할 수 있다.
+  </p>
+  <div class="tw">
+    <table>
+      <caption>A-B-A-B 교대 측정 · 처리량 p50 (Mbps) · C=1</caption>
+      <thead><tr><th>변형</th><th>AWS-1</th><th>KOREN-1</th><th>AWS-2</th><th>KOREN-2</th><th>AWS 반복 드리프트</th><th>KOREN 반복 드리프트</th><th>평균 신호</th></tr></thead>
+      <tbody>
+        <tr><td>meshopt</td><td class="n">263.55</td><td class="n">223.22</td><td class="n">250.35</td><td class="n">246.74</td>
+            <td class="n">+5.0%</td><td class="n hi">+10.5%</td><td class="n">−8.6%</td></tr>
+        <tr><td>draco</td><td class="n">213.38</td><td class="n">196.15</td><td class="n">203.77</td><td class="n">201.86</td>
+            <td class="n">+4.5%</td><td class="n">+2.9%</td><td class="n">−4.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>방향은 확정, 크기는 확정 불가.</strong> 4개 쌍 비교 전부에서 KOREN 이 느렸다
+    (−15.3 / −1.4 / −8.1 / −0.9%) — 부호가 4/4 일관이다. 그러나 쌍마다 −0.9% ~ −15.3% 로
+    흔들리고, 같은 타겟을 반복했을 때의 드리프트(최대 10.5%)가 타겟 간 차이와 같은 규모다.
+    <strong>어떤 단일 퍼센트 값도 발표에 쓸 수 없다.</strong>
+  </p>
+  <p class="note">
+    이틀 간격으로 잰 단발 비교(raw −10.1% / draco −19.5%)는 <strong>폐기했다.</strong>
+    같은 조건 재측정에서 크기가 전혀 달라졌다 — 노이즈였다. 측정 중 회선이 계속 나빠졌다
+    (speedtest ↓ 227.66 → 247.95 → 180.42 → 179.03). 공유기 mdev 는 2.88~3.38 ms 로
+    안정적이었으므로 Wi-Fi 가 아니라 상위 구간 변동이다.
+  </p>
+
+  <h3>업로드는 차이가 회선 드리프트로 설명된다</h3>
+  <div class="tw">
+    <table>
+      <caption>IFC 업로드 · <code>?convert=false</code> · n=20</caption>
+      <thead><tr><th>지표</th><th>AWS</th><th>KOREN</th></tr></thead>
+      <tbody>
+        <tr><td>hoist 32.90MB 처리량</td><td class="n">69.60 Mbps</td><td class="n">61.95 Mbps</td></tr>
+        <tr><td>그 세션 speedtest ↑</td><td class="n">65.66</td><td class="n">58.31</td></tr>
+        <tr class="accent"><td>실측 / speedtest</td><td class="n hi">106.0%</td><td class="n hi">106.2%</td></tr>
+        <tr><td>서버 작업 비중 (<code>store+db</code>)</td><td class="n">3.0%</td><td class="n">3.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    회선 용량 대비 효율이 소수점까지 같다. <strong>−11% 는 경로 차이가 아니라 그 시각 회선이
+    11% 느렸던 것이다.</strong> 업로드에서 KOREN 을 정당화할 수치는 없다.
+  </p>
+</section>
+
+<!-- 03 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">03</span>KOREN 이 이기는 지점 — 인원</h2>
+  <p>
+    서버 상한은 loopback(서버가 자기 자신을 부름)으로 쟀다. 1인 전송에서는 클라이언트 회선이
+    먼저 막혀 이 상한이 드러나지 않는다. 참가자가 늘면 상한이 먼저 걸린다.
+  </p>
+  <div class="tw">
+    <table>
+      <caption>서버 상한 · loopback C=1 · n=70</caption>
+      <thead><tr><th>변형</th><th>AWS</th><th>KOREN</th><th>KOREN/AWS</th><th>상용망 대비 배수 (AWS / KOREN)</th></tr></thead>
+      <tbody>
+        <tr><td>raw</td><td class="n ac">1,696.31</td><td class="n kc">2,807.73</td><td class="n hi">1.66배</td><td class="n">4.97 / 9.15배</td></tr>
+        <tr><td>meshopt</td><td class="n ac">1,377.81</td><td class="n kc">2,767.52</td><td class="n hi">2.01배</td><td class="n">4.52 / 9.23배</td></tr>
+        <tr><td>draco</td><td class="n ac">1,016.38</td><td class="n kc">2,554.79</td><td class="n hi">2.51배</td><td class="n">3.86 / 12.07배</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>참가자당 속도 (meshopt 36.64MB, 각자 300 Mbps 회선 가정)</h3>
+  <div class="chart">
+    <div class="grp">
+      <div class="grp-label">1명</div>
+      <div class="pair">
+        <div class="b aws" style="--w:100%"><i></i><span>300 Mbps · 0.98s</span></div>
+        <div class="b koren" style="--w:100%"><i></i><span>300 Mbps · 0.98s</span></div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-label">5명</div>
+      <div class="pair">
+        <div class="b aws" style="--w:91.9%"><i></i><span>275.6 · 1.06s</span></div>
+        <div class="b koren" style="--w:100%"><i></i><span>300 · 0.98s</span></div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-label">10명</div>
+      <div class="pair">
+        <div class="b aws" style="--w:45.9%"><i></i><span>137.8 · 2.13s</span></div>
+        <div class="b koren" style="--w:92.3%"><i></i><span>276.8 · 1.06s</span></div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-label">20명</div>
+      <div class="pair">
+        <div class="b aws" style="--w:23.0%"><i></i><span>68.9 · 4.25s</span></div>
+        <div class="b koren" style="--w:46.1%"><i></i><span>138.4 · 2.13s</span></div>
+      </div>
+    </div>
+    <div class="legend">
+      <b><i class="sw" style="background:var(--aws)"></i> AWS t3.medium — 상한 1,377.81 Mbps</b>
+      <b><i class="sw" style="background:var(--koren)"></i> KOREN VM — 상한 2,767.52 Mbps</b>
+    </div>
+  </div>
+  <p>
+    갈리는 지점은 <strong>AWS 4.6명 / KOREN 9.2명</strong>이다 (상한 ÷ 300 Mbps). 그 아래에서는
+    두 서버가 같고, 그 위에서는 서버 상한이 참가자당 속도를 정한다.
+    <strong>10인 방에서 도면 교체가 AWS 2.13초, KOREN 1.06초다.</strong>
+  </p>
+  <p class="note">
+    이 표는 산출값이다. loopback 상한(실측)을 인원으로 나눈 것이며, 실제 다중 클라이언트
+    측정으로 확인하지 않았다 — §05 참조.
+  </p>
+</section>
+
+<!-- 04 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">04</span>egress 한도 — 서비스 규모를 직접 제약한다</h2>
+  <div class="tw">
+    <table>
+      <caption>AWS egress 예산</caption>
+      <thead><tr><th>항목</th><th>값</th></tr></thead>
+      <tbody>
+        <tr><td>이번 측정만으로 쓴 AWS egress</td><td class="n hi">20.16 GB</td></tr>
+        <tr><td>AWS 월 무료 한도</td><td class="n">100 GB</td></tr>
+        <tr><td>meshopt 1회 배포</td><td class="n">36.64 MB</td></tr>
+        <tr><td>무료 한도 내 배포 횟수</td><td class="n">2,729회 / 월</td></tr>
+        <tr class="accent"><td>5인 방 1회 = 5회 배포 →</td><td class="n hi">약 546 방 / 월</td></tr>
+        <tr><td>KOREN egress</td><td class="n hi">과금 없음</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    한 달에 546개 방을 넘으면 과금이 시작된다. 원본 raw(339.23MB)를 그대로 배포하면 295회다.
+    계획서 §11 도 "egress 60GB 초과" 를 중단·보고 조건으로 두고 있으니 프로젝트가 이미 인식한
+    제약이다. <strong>측정 한 번이 무료 한도의 20% 를 먹었다.</strong>
+  </p>
+  <p class="note">
+    이것은 속도 논거가 아니라 경제성 논거다. 그러나 "왜 KOREN 인가" 에 대한 답으로는 정당하고
+    수치가 있다. 압축(meshopt 89.2% 절감)이 이 한도를 9배 늘려주는 것도 같은 축의 이야기다.
+  </p>
+</section>
+
+<!-- 05 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">05</span>기각한 논거와 남은 한계</h2>
+  <div class="limits">
+    <div class="limit">
+      <b>✗ 스로틀 회피 — 실험으로 기각</b>
+      <p>
+        AWS t3 계열은 네트워크가 버스터블이고 크레딧이 마르면 조용히 스로틀된다. 부팅 이후
+        누적 <code>bw_in_allowance_exceeded</code> 가 11 이었으므로 실제로 발동한 이력이 있다.
+        인과를 확정하려고 <strong>32.9MB IFC 를 10회 연속(총 329MB, 평균 72.3 Mbps)</strong>
+        밀어 봤으나 <strong>카운터 0 증가</strong>였다. 집 상향 72 Mbps 로는 t3.medium 의 inbound
+        임계에 닿지 않는다. 누적 11건은 다른 활동에서 나온 것이고, 소비자 회선으로는 이 논거를
+        세울 수 없다. egress 쪽 <code>bw_out</code> 은 20.16GB 를 서빙해도 0 이었다.
+      </p>
+    </div>
+    <div class="limit">
+      <b>서버 상한은 하한 근사다 — §03 의 핵심 근거가 미검증</b>
+      <p>
+        loopback 은 C=1 로만 잰다. 2 vCPU(AWS)에서 부하 생성기와 서버가 CPU 를 나눠 쓰므로
+        실제 상한은 더 높다. §03 의 참가자당 속도표는 이 상한을 인원으로 나눈 <strong>산출값</strong>
+        이며, 실제로 여러 클라이언트가 동시에 받을 때 2배 비율이 유지되는지는 확인하지 않았다.
+        AWS 는 2 vCPU 라 부하가 커질 때 KOREN 보다 더 빨리 무너질 수도 있어, 실측하면 격차가
+        커질 가능성도 있다.
+      </p>
+    </div>
+    <div class="limit">
+      <b>전송 계층이 다르다 (계획서 §4-3)</b>
+      <p>
+        AWS 는 <code>https → nginx → proxy_pass → uvicorn</code>, KOREN 은
+        <code>http → uvicorn</code> 직결이다. KOREN 이 TLS 핸드셰이크 <strong>14.75 ms</strong> 를
+        내지 않는다 (핸드셰이크 총합 AWS 25.0 ms vs KOREN 11.4 ms). 처리량 비교에는 영향이
+        미미하나(raw 8초에 0.19%) TTFB 비교는 오염된다. <strong>KOREN 에 nginx + TLS 를 붙이는
+        것이 정석이다.</strong>
+      </p>
+    </div>
+    <div class="limit">
+      <b>집에서 KOREN 을 재는 것은 목적과 다르다</b>
+      <p>
+        경로가 <code>집 → LG U+ → 피어링 → KOREN</code> 이다. KOREN 의 망 이점은 클라이언트도
+        KOREN 에 있을 때 나온다. §02 의 "KOREN 이 약간 느리다" 를 "KOREN 이 나쁘다" 로 읽어서는
+        안 된다 — 소비자 ISP 에서 연구망으로 들어가는 경로가 AWS 서울 피어링보다 불리하다는
+        뜻이다. 서버 RTT 는 KOREN 13.8~16.8 ms, TCP 연결은 KOREN 8.59 ms vs AWS 5.25 ms 다.
+      </p>
+    </div>
+    <div class="limit">
+      <b>Wi-Fi 노이즈 · 단일 지점</b>
+      <p>
+        전 세션이 가정 Wi-Fi 1지점이다. 공유기 RTT mdev 는 세션에 따라 2.88~21.83 ms 로
+        흔들렸다. 유선으로 재면 CV 가 낮아진다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 ─────────────────────────────────────────────────────────── -->
+<section>
+  <h2><span class="num">06</span>다음 실험 — 다중 클라이언트 상한 실측</h2>
+  <p>
+    §03 의 "10인 방에서 2배" 는 이 보고서에서 유일하게 KOREN 을 정당화하는 성능 수치인데
+    아직 산출값이다. 실측으로 바꾸는 방법은 <strong>클라이언트를 여러 대 두는 것</strong>이다.
+    KOREN VM 에 SSH 가 있으므로 지금 가능하다.
+  </p>
+  <ol class="steps">
+    <li><strong>KOREN VM 을 AWS 의 클라이언트로 쓴다.</strong> KOREN 은 1 Gbps 급 연구망이므로
+      집 회선(300 Mbps)보다 훨씬 큰 부하를 걸 수 있다. AWS 서버가 몇 Mbps 에서 무너지는지
+      단독으로 확인한다 (C=1,3,10 스윕).</li>
+    <li><strong>반대로 AWS 쪽에서 KOREN 을 때린다.</strong> AWS SSH 가 없으므로 서버 담당자에게
+      요청하거나, 집 노트북 + KOREN VM 두 대를 동시에 AWS 로 향하게 해 합계 상한을 본다.</li>
+    <li><strong>합계가 loopback 상한에 수렴하는지 본다.</strong> 수렴하면 §03 표가 실측으로
+      뒷받침된다. 미달하면 상한이 더 낮다는 뜻이고 §03 을 하향 수정해야 한다.</li>
+    <li><strong>같은 실험을 KOREN 서버에도 한다.</strong> 두 서버의 다중 클라이언트 상한 비율이
+      loopback 비율(2.01배)과 같은지 확인한다.</li>
+  </ol>
+  <p class="note">
+    egress 주의: AWS 를 대상으로 하는 부하는 전부 egress 과금 대상이다. 이미 20.16GB 를 썼고
+    무료 한도는 100GB 다. C=10 스윕은 meshopt 기준 세션당 약 8GB 이므로 남은 예산 안에서
+    2~3회가 한계다. KOREN 대상 부하는 과금이 없다.
+  </p>
+</section>
+
+<footer>
+  <div>
+    측정 11세션 1,595샘플 · 전부 <code>scripts/check_schema.py</code> 통과 ·
+    스로틀 오염 0건 · 실패 0건
+  </div>
+  <div>
+    원시 데이터 <span class="mono">results/transfer_*.json</span> ·
+    집계 <span class="mono">summary_20260813.md</span>, <span class="mono">summary_20260814.md</span> ·
+    실행 기록 <span class="mono">transfer_run_journal.md</span> ·
+    인수인계 <span class="mono">HANDOFF.md</span>
+  </div>
+  <div>
+    선행 보고서: 회선 업/다운 비대칭 4.91:1 —
+    <span class="mono">report_line_asymmetry_20260813.md</span>
+  </div>
+</footer>
+
+</div>

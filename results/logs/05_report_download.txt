@@ -1,0 +1,55 @@
+
+!! 보고 대상 1건 (§11) — 위 리포트의 마지막 절 참조
+## 측정 조건
+
+- **commercial** · `20260813_0006_home` · home / wifi · ISP LG U+ (Lg Powercomm) · 2026-08-13 00:06 · 타겟 `https://AWS_HOST_REDACTED` · 하네스 cli
+  - 서버: t3.medium / ap-northeast-2 / gp3 / 서빙 disk (/static/assets, nginx) / 버전 OFK_KOR_3D Server 0.1.0 / nginx 1.24.0
+  - 회선: ↓227.117 / ↑71.12 Mbps · 서버 RTT avg 0 ms (mdev 0) · 63 hops
+  - **Wi-Fi 한계**: 공유기 RTT mdev **11.61 ms** — 이 노이즈가 아래 모든 측정값에 포함되어 있다 (공유기까지의 변동이 곧 Wi-Fi 구간 노이즈 바닥값)
+  - 스로틀 감시: 켜짐 · iface `ens5` · 카운터 못 읽은 라운드 0회
+  - 제외 샘플: 0 / 전체 530
+  - 실행 명령: `python scripts/measure.py --target https://AWS_HOST_REDACTED --label commercial --location home --network-type wifi --isp LG U+ (Lg Powercomm) --server-version OFK_KOR_3D Server 0.1.0 / nginx 1.24.0 --serving disk (/static/assets, nginx)`
+
+## 집계
+
+전체 샘플 530건 중 **0건 제외** (스로틀 오염·실패). 모든 표에 `n` 을 병기했다.
+
+백분위 규칙 (§8.1): `n < 30` → p50 만 · `30 ≤ n < 100` → p50·p95 · `n ≥ 100` → p50·p95·p99. 낼 수 없는 값은 — 로 비웠다.
+
+### 표 1 — 다운로드
+
+| 경로 | 변형 | C | n | p50(ms) | p95(ms) | 처리량 중앙값(Mbps) | CV | 제외(스로틀) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| commercial | draco (13.6MB) | 1 | 30 | 414.2 | 619.6 | 263.05 | 0.155 | 0 |
+| commercial | draco (13.6MB) | 10 | 200 | 2,920.5 | 3,585.1 | 37.15 | 0.415 | 0 |
+| commercial | meshopt (36.6MB) | 1 | 30 | 963.2 | 1,226.9 | 304.63 | 0.106 | 0 |
+| commercial | meshopt (36.6MB) | 3 | 60 | 2,522.7 | 3,319.4 | 115.12 | 0.240 | 0 |
+| commercial | meshopt (36.6MB) | 10 | 200 | 7,445.1 | 8,996.3 | 39.33 | 0.413 | 0 |
+| commercial | raw (339.2MB) | 1 | 10 | 8,011.6 | — | 341.38 | 0.033 | 0 |
+
+`CV = stddev / mean` (처리량). **지터가 아니다** — 지터는 RTT 연속 샘플 간 변화량이며 동기화 측정에서만 쓰는 별개 지표다. 여기서는 처리량 변동성이다.
+
+### 표 2 — 업로드
+
+측정 데이터 없음.
+
+### 표 3 — 압축 효과
+
+경로 `commercial`, C=1 기준.
+
+| 변형 | 파일 크기 | 절감률 | p50 전송 시간 | 시간 절감률 |
+|---|---:|---:|---:|---:|
+| raw | 339.23 MB | 0.0% | 8,011.6 ms | 0.0% |
+| meshopt | 36.64 MB | 89.2% | 963.2 ms | 88.0% |
+| draco | 13.60 MB | 96.0% | 414.2 ms | 94.8% |
+
+크기 절감률과 시간 절감률의 차이가 전송 외 고정 비용(RTT, 핸드셰이크)이다.
+
+## 보고 대상 (§11)
+
+- commercial/raw/C=1: n=10 — p95 미산출 (§8.1)
+
+---
+
+
+리포트 → /Users/apple/Documents/OF_KOR_3D/results/summary_20260813.md
